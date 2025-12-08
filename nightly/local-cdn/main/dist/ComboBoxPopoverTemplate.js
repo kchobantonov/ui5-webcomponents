@@ -3,6 +3,7 @@ import Icon from "./Icon.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import Input from "./Input.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -17,7 +18,7 @@ export default function ComboBoxPopoverTemplate() {
                             }, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: this._valueStateMessageIcon }), this.open && valueStateMessage.call(this)] }), !!this._filteredItems.length &&
                         _jsx(List, { class: "ui5-combobox-items-list", separators: "None", accessibleRole: "ListBox", selectionMode: "Single", onItemClick: this._selectItem, onItemFocused: this._onItemFocus, onMouseDown: this._itemMousedown, children: this._filteredItems.map(item => _jsx("slot", { name: item._individualSlot })) }), this._isPhone &&
                         _jsxs("div", { slot: "footer", class: "ui5-responsive-popover-footer", children: [_jsx(Button, { design: "Emphasized", onClick: this._closeRespPopover, children: this._dialogOkButtonText }), _jsx(Button, { class: "ui5-responsive-popover-close-btn", design: "Transparent", onClick: this._closeRespPopover, children: this._dialogCancelButtonText })] })] }), this.shouldOpenValueStateMessagePopover &&
-                _jsx(Popover, { preventFocusRestore: true, preventInitialFocus: true, hideArrow: true, tabindex: -1, class: "ui5-valuestatemessage-popover", horizontalAlign: this._valueStatePopoverHorizontalAlign, placement: "Bottom", opener: this, open: this.valueStateOpen, onClose: this._handleValueStatePopoverAfterClose, onFocusOut: this._handleValueStatePopoverFocusout, children: _jsxs("div", { slot: "header", class: this.classes.popoverValueState, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: this._valueStateMessageIcon }), valueStateMessage.call(this)] }) })] }));
+                _jsx(Popover, { preventFocusRestore: true, preventInitialFocus: true, hideArrow: true, tabindex: -1, class: "ui5-valuestatemessage-popover", horizontalAlign: PopoverHorizontalAlign.Start, placement: "Bottom", opener: this, open: this.valueStateOpen, onClose: this._handleValueStatePopoverAfterClose, onFocusOut: this._handleValueStatePopoverFocusout, children: _jsxs("div", { slot: "header", class: this.classes.popoverValueState, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: this._valueStateMessageIcon }), valueStateMessage.call(this)] }) })] }));
 }
 function valueStateMessage() {
     return (_jsx(_Fragment, { children: this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : _jsx("slot", { name: "valueStateMessage" }) }));

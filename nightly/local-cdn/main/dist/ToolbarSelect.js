@@ -125,6 +125,7 @@ __decorate([
     slot({
         "default": true,
         type: HTMLElement,
+        invalidateOnChildChange: true,
     })
 ], ToolbarSelect.prototype, "options", void 0);
 __decorate([

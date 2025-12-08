@@ -18,7 +18,7 @@ const patchScopingSuffix = (klass) => {
     const metadata = klass.getMetadata();
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const originalGetTag = metadata.getTag;
-    metadata.getTag = function () {
+    metadata.getTag = function getTag() {
         const originalTag = originalGetTag.call(this);
         if (!originalTag) {
             return "";

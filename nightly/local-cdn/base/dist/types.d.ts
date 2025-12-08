@@ -24,6 +24,7 @@ export type AccessibilityInfo = {
     role?: AriaRole;
     type?: string;
     description?: string;
+    label?: string;
     disabled?: boolean;
     readonly?: boolean;
     required?: boolean;

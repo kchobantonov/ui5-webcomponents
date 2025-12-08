@@ -23,6 +23,6 @@ type PopupInfo = {
 declare const addOpenedPopup: (popupInfo: PopupInfo) => void;
 declare const removeOpenedPopup: (popup: object) => void;
 declare const getTopmostPopup: () => object;
-declare const patchPopup: (Popup: OpenUI5Popup, Dialog: OpenUI5PopupBasedControl, Popover: OpenUI5PopupBasedControl) => void;
+declare const patchPopup: (Popup: OpenUI5Popup, Dialog: OpenUI5PopupBasedControl) => void;
 export { patchPopup, addOpenedPopup, removeOpenedPopup, getTopmostPopup, };
 export type { OpenUI5Popup, OpenUI5PopupBasedControl, PopupInfo };

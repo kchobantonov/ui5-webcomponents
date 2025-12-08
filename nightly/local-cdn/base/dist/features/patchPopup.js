@@ -107,14 +107,13 @@ const createGlobalStyles = () => {
     stylesheet.replaceSync(`.sapMPopup-CTX:popover-open { inset: unset; }`);
     document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 };
-const patchPopup = (Popup, Dialog, Popover) => {
+const patchPopup = (Popup, Dialog) => {
     insertOpenUI5PopupStyles();
     patchOpen(Popup); // Popup.prototype.open
     patchClosed(Popup); // Popup.prototype._closed
     createGlobalStyles(); // Ensures correct popover positioning by OpenUI5 (otherwise 0,0 is the center of the screen)
     patchFocusEvent(Popup); // Popup.prototype.onFocusEvent
     patchPopupBasedControl(Dialog); // Dialog.prototype.onsapescape
-    patchPopupBasedControl(Popover); // Popover.prototype.onsapescape
 };
 export { patchPopup, addOpenedPopup, removeOpenedPopup, getTopmostPopup, };
 //# sourceMappingURL=patchPopup.js.map

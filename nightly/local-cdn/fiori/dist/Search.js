@@ -222,7 +222,7 @@ let Search = Search_1 = class Search extends SearchField {
             return;
         }
         this._isTyping = true;
-        this.open = this.value.length > 0;
+        this.open = this.value.length > 0 && this._popoupHasAnyContent();
     }
     _handleClear() {
         super._handleClear();

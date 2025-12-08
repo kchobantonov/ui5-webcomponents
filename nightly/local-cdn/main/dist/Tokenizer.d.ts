@@ -196,6 +196,8 @@ declare class Tokenizer extends UI5Element implements IFormInputElement {
     _previousToken: Token | null;
     _focusedElementBeforeOpen?: HTMLElement | null;
     _deletedDialogItems: Token[];
+    _lastFocusedToken: Token | null;
+    _isFocusSetInternally: boolean;
     /**
      * Scroll to end when tokenizer is expanded
      * @private
@@ -248,6 +250,12 @@ declare class Tokenizer extends UI5Element implements IFormInputElement {
     _onfocusin(e: FocusEvent): void;
     _addTokenToNavigation(token: Token): void;
     _onfocusout(e: FocusEvent): void;
+    /**
+     * Determines the DOM element to focus when the Tokenizer receives focus.
+     * If the last-focused token is not overflown, focus is restored to it.
+     * Otherwise, the focus defaults to the first visible token.
+     */
+    getFocusDomRef(): HTMLElement | undefined;
     _toggleTokenSelection(tokens: Array<Token>): void;
     _handleTokenSelection(e: KeyboardEvent | MouseEvent, deselectAll?: boolean): void;
     get hasTokens(): boolean;

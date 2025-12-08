@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "@ui5/webcomponents-fiori",
-  "version": "2.16.0-rc.3",
+  "version": "2.17.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -1494,7 +1494,7 @@
           "attributes": [
             {
               "name": "items-to-show-count",
-              "description": "Specifies the number of additional items available to show.\nThis value replaces the placeholder (N) in the \"Show more (N)\" text.\nIf not set, the placeholder will remain as (N).",
+              "description": "Specifies the number of additional items available to show.\nIf no value is defined, the control shows \"Show more\" (without any counter).\nIf a number is provided, it displays \"Show more (N)\", where N is that number.",
               "value": { "type": "number | undefined", "default": "undefined" }
             },
             {
@@ -1513,7 +1513,7 @@
             "properties": [
               {
                 "name": "items-to-show-count",
-                "description": "Specifies the number of additional items available to show.\nThis value replaces the placeholder (N) in the \"Show more (N)\" text.\nIf not set, the placeholder will remain as (N).",
+                "description": "Specifies the number of additional items available to show.\nIf no value is defined, the control shows \"Show more\" (without any counter).\nIf a number is provided, it displays \"Show more (N)\", where N is that number.",
                 "value": { "type": "number | undefined" }
               },
               {
@@ -3351,6 +3351,84 @@
           "js": { "properties": [], "events": [] }
         },
         {
+          "name": "ui5-user-settings-account-view",
+          "description": "### Overview\n\nThe `ui5-user-settings-account-view` represents a view displayed in the `ui5-user-settings-item`.\n---\n\n\n### **Events:**\n - **edit-accounts-click** - Fired when the `Edit Accounts` button is selected.\n- **manage-account-click** - Fired when the `Manage Account` button is selected.\n\n### **Slots:**\n - **account** - Defines the user account.\n- **default** - Defines the content of the view.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "show-manage-account",
+              "description": "Defines if the User Menu shows the `Manage Account` option.",
+              "value": { "type": "boolean", "default": "false" }
+            },
+            {
+              "name": "text",
+              "description": "Defines the title text of the user settings view.",
+              "value": { "type": "string | undefined", "default": "undefined" }
+            },
+            {
+              "name": "selected",
+              "description": "Defines whether the view is selected. There can be just one selected view at a time.",
+              "value": { "type": "boolean", "default": "false" }
+            },
+            {
+              "name": "secondary",
+              "description": "Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`\nand controls the visibility of the back button.",
+              "value": { "type": "boolean", "default": "false" }
+            }
+          ],
+          "slots": [
+            { "name": "account", "description": "Defines the user account." },
+            {
+              "name": "default",
+              "description": "Defines the content of the view."
+            }
+          ],
+          "events": [
+            {
+              "name": "edit-accounts-click",
+              "description": "Fired when the `Edit Accounts` button is selected."
+            },
+            {
+              "name": "manage-account-click",
+              "description": "Fired when the `Manage Account` button is selected."
+            }
+          ],
+          "js": {
+            "properties": [
+              {
+                "name": "show-manage-account",
+                "description": "Defines if the User Menu shows the `Manage Account` option.",
+                "value": { "type": "boolean" }
+              },
+              {
+                "name": "text",
+                "description": "Defines the title text of the user settings view.",
+                "value": { "type": "string | undefined" }
+              },
+              {
+                "name": "selected",
+                "description": "Defines whether the view is selected. There can be just one selected view at a time.",
+                "value": { "type": "boolean" }
+              },
+              {
+                "name": "secondary",
+                "description": "Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`\nand controls the visibility of the back button.",
+                "value": { "type": "boolean" }
+              }
+            ],
+            "events": [
+              {
+                "name": "edit-accounts-click",
+                "description": "Fired when the `Edit Accounts` button is selected."
+              },
+              {
+                "name": "manage-account-click",
+                "description": "Fired when the `Manage Account` button is selected."
+              }
+            ]
+          }
+        },
+        {
           "name": "ui5-user-settings-dialog",
           "description": "### Overview\n\nThe `ui5-user-settings-dialog` is an SAP Fiori-specific web component used in the `ui5-user-menu`.\nIt allows the user to easily view information and settings for an account.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsDialog.js\";`\n---\n\n\n### **Events:**\n - **selection-change** - Fired when an item is selected.\n- **open** - Fired when a settings dialog is open.\n- **before-close** - Fired before the settings dialog is closed.\n- **close** - Fired when a settings dialog is closed.\n\n### **Slots:**\n - **default** - Defines the user settings items.\n\n**Note:**  If no setting item is set as `selected`, the first one will be selected.\n- **fixedItems** - Defines the fixed user settings items.",
           "doc-url": "",
@@ -3611,7 +3689,7 @@
         },
         {
           "name": "ui5-view-settings-dialog",
-          "description": "### Overview\nThe `ui5-view-settings-dialog` component helps the user to sort data within a list or a table.\nIt consists of several lists like `Sort order` which is built-in and `Sort By` and `Filter By` lists,\nfor which you must be provide items(`ui5-sort-item` & `ui5-filter-item` respectively)\nThese options can be used to create sorters for a table.\n\nThe `ui5-view-settings-dialog` interrupts the current application processing as it is the only focused UI element and\nthe main screen is dimmed/blocked.\nThe `ui5-view-settings-dialog` is modal, which means that user action is required before returning to the parent window is possible.\n\n### Structure\nA `ui5-view-settings-dialog` consists of a header, content, and a footer for action buttons.\nThe `ui5-view-settings-dialog` is usually displayed at the center of the screen.\n\n### Responsive Behavior\n`ui5-view-settings-dialog` stretches on full screen on phones.\n\n### ES6 Module Import\n\n`import \"@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js\";`\n---\n\n\n### **Events:**\n - **confirm** - Fired when confirmation button is activated.\n- **cancel** - Fired when cancel button is activated.\n- **before-open** - Fired before the component is opened.\n- **open** - Fired after the dialog is opened.\n- **close** - Fired after the dialog is closed.\n\n### **Methods:**\n - **setConfirmedSettings(settings: _VSDSettings_): _void_** - Sets a JavaScript object, as settings to the `ui5-view-settings-dialog`.\nThis method can be used after the dialog is initially open, as the dialog needs\nto set its initial settings.\nThe `ui5-view-settings-dialog` throws an event called \"before-open\",\nwhich can be used as a trigger point.\nThe object should have the following format:\n\n### **Slots:**\n - **sortItems** - Defines the list of items against which the user could sort data.\n\n**Note:** If you want to use this slot, you need to import used item: `import \"@ui5/webcomponents-fiori/dist/SortItem.js\";`\n- **filterItems** - Defines the `filterItems` list.\n\n**Note:** If you want to use this slot, you need to import used item: `import \"@ui5/webcomponents-fiori/dist/FilterItem.js\";`\n- **groupItems** - Defines the list of items against which the user could group data.\n\n**Note:** If you want to use this slot, you need to import used item: `import \"@ui5/webcomponents-fiori/dist/GroupItem.js\";`",
+          "description": "### Overview\nThe `ui5-view-settings-dialog` component helps the user to sort data within a list or a table.\nIt consists of several lists like `Sort order` which is built-in and `Sort By` and `Filter By` lists,\nfor which you must be provide items(`ui5-sort-item` & `ui5-filter-item` respectively)\nThese options can be used to create sorters for a table.\n\nThe `ui5-view-settings-dialog` interrupts the current application processing as it is the only focused UI element and\nthe main screen is dimmed/blocked.\nThe `ui5-view-settings-dialog` is modal, which means that user action is required before returning to the parent window is possible.\n\n### Structure\nA `ui5-view-settings-dialog` consists of a header, content, and a footer for action buttons.\nThe `ui5-view-settings-dialog` is usually displayed at the center of the screen.\n\n### Responsive Behavior\n`ui5-view-settings-dialog` stretches on full screen on phones.\n\n### ES6 Module Import\n\n`import \"@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js\";`\n---\n\n\n### **Events:**\n - **confirm** - Fired when confirmation button is activated.\n- **cancel** - Fired when cancel button is activated.\n- **before-open** - Fired before the component is opened.\n- **open** - Fired after the dialog is opened.\n- **close** - Fired after the dialog is closed.\n\n### **Methods:**\n - **setConfirmedSettings(settings: _VSDSettings_): _void_** - Sets a JavaScript object, as settings to the `ui5-view-settings-dialog`.\nThis method can be used after the dialog is initially open, as the dialog needs\nto set its initial settings.\nThe `ui5-view-settings-dialog` throws an event called \"before-open\",\nwhich can be used as a trigger point.\nThe object should have the following format:\n\n### **Slots:**\n - **sortItems** - Defines the list of items against which the user could sort data.\n\n**Note:** If you want to use this slot, you need to import used item: `import \"@ui5/webcomponents-fiori/dist/SortItem.js\";`\n- **filterItems** - Defines the `filterItems` list.\n\n**Note:** If you want to use this slot, you need to import used item: `import \"@ui5/webcomponents-fiori/dist/FilterItem.js\";`\n- **groupItems** - Defines the list of items against which the user could group data.\n\n**Note:** If you want to use this slot, you need to import used item: `import \"@ui5/webcomponents-fiori/dist/GroupItem.js\";`\n\n### **CSS Parts:**\n - **header** - Used to style the header.",
           "doc-url": "",
           "attributes": [
             {
@@ -3859,6 +3937,7 @@
           "name": "part(root)",
           "description": "Used to style the outermost wrapper of the `ui5-shellbar`"
         },
+        { "name": "part(header)", "description": "Used to style the header." },
         {
           "name": "part(navigator)",
           "description": "Used to style the progress navigator of the `ui5-wizard`."

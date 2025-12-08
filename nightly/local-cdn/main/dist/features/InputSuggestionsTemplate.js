@@ -7,15 +7,17 @@ import Button from "../Button.js";
 import ListAccessibleRole from "../types/ListAccessibleRole.js";
 export default function InputSuggestionsTemplate(hooks) {
     const suggestionsList = hooks?.suggestionsList || defaultSuggestionsList;
+    // Mobile header hook - intended only for MultiInput design scenario
+    const mobileHeader = hooks?.mobileHeader;
     const valueStateMessage = hooks?.valueStateMessage;
     const valueStateMessageInputIcon = hooks?.valueStateMessageInputIcon;
     return (_jsxs(ResponsivePopover, { class: this.classes.popover, hideArrow: true, preventFocusRestore: true, preventInitialFocus: true, placement: "Bottom", horizontalAlign: "Start", tabindex: -1, style: this.styles.suggestionsPopover, onOpen: this._afterOpenPicker, onClose: this._afterClosePicker, onScroll: this._scroll, open: this.open, opener: this, accessibleName: this._popupLabel, children: [this._isPhone &&
-                _jsxs(_Fragment, { children: [_jsxs("div", { slot: "header", class: "ui5-responsive-popover-header", children: [_jsx("div", { class: "row", children: _jsx("span", { children: this._headerTitleText }) }), _jsx("div", { class: "row", children: _jsx("div", { class: "input-root-phone native-input-wrapper", children: _jsx(Input, { class: "ui5-input-inner-phone", type: this.inputType, value: this.value, showClearIcon: this.showClearIcon, placeholder: this.placeholder, onInput: this._handleInput }) }) })] }), this.hasValueStateMessage &&
-                            _jsxs("div", { class: this.classes.popoverValueState, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: valueStateMessageInputIcon?.call(this) }), this.open && valueStateMessage?.call(this)] })] }), !this._isPhone && this.hasValueStateMessage &&
+                _jsx(_Fragment, { children: _jsxs("div", { slot: "header", class: "ui5-responsive-popover-header", children: [_jsx("div", { class: "row", children: _jsx("span", { children: this._headerTitleText }) }), _jsx("div", { class: "row", children: _jsxs("div", { class: "input-root-phone native-input-wrapper", children: [_jsx(Input, { class: "ui5-input-inner-phone", type: this.inputType, value: this.value, showClearIcon: this.showClearIcon, placeholder: this.placeholder, onInput: this._handleInput }), mobileHeader?.call(this)] }) }), this.hasValueStateMessage &&
+                                _jsxs("div", { class: this.classes.popoverValueState, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: valueStateMessageInputIcon?.call(this) }), this.open && valueStateMessage?.call(this)] })] }) }), !this._isPhone && this.hasValueStateMessage &&
                 _jsxs("div", { slot: "header", class: {
                         "ui5-responsive-popover-header": true,
                         ...this.classes.popoverValueState,
-                    }, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: valueStateMessageInputIcon?.call(this) }), this.open && valueStateMessage?.call(this)] }), suggestionsList.call(this), this._isPhone &&
+                    }, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: valueStateMessageInputIcon?.call(this) }), this.open && valueStateMessage?.call(this)] }), this.showSuggestions && suggestionsList.call(this), this._isPhone &&
                 _jsxs("div", { slot: "footer", class: "ui5-responsive-popover-footer", children: [_jsx(Button, { design: "Emphasized", onClick: this._confirmMobileValue, children: this._suggestionsOkButtonText }), _jsx(Button, { class: "ui5-responsive-popover-close-btn", design: "Transparent", onClick: this._cancelMobileValue, children: this._suggestionsCancelButtonText })] })] }));
 }
 function defaultSuggestionsList() {

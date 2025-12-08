@@ -106,6 +106,7 @@ type Picker = "day" | "month" | "year";
  * @constructor
  * @extends DateComponentBase
  * @public
+ * @csspart input - Used to style the input element. This part is forwarded to the underlying ui5-input element.
  */
 declare class DatePicker extends DateComponentBase implements IFormInputElement {
     eventDetails: DateComponentBase["eventDetails"] & {

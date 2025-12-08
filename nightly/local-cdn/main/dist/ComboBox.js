@@ -43,7 +43,6 @@ import "./ComboBoxItem.js";
 import "./ComboBoxItemGroup.js";
 // eslint-disable-next-line
 import { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 const SKIP_ITEMS_SIZE = 10;
 var ValueStateIconMapping;
 (function (ValueStateIconMapping) {
@@ -1027,9 +1026,6 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     }
     get shouldDisplayDefaultValueStateMessage() {
         return !this.valueStateMessage.length && this.hasValueStateText;
-    }
-    get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Start : PopoverHorizontalAlign.End;
     }
     /**
      * This method is relevant for sap_horizon theme only

@@ -128,9 +128,6 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
             this._itemNavigation._focusCurrentItem();
         }
     }
-    get placement() {
-        return this.isRtl ? "Start" : "End";
-    }
     get isRtl() {
         return this.effectiveDir === "rtl";
     }

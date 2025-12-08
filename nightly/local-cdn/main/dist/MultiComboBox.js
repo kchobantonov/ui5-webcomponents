@@ -345,7 +345,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         const input = e.target;
         const value = input.value;
         const filteredItems = this._filterItems(value);
-        const oldValueState = this.valueState;
         this._shouldFilterItems = true;
         if (this.filterSelected) {
             this.filterSelected = false;
@@ -356,19 +355,19 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 this._validationTimeout = null;
             }
             else {
-                input.value = this._inputLastValue;
                 return;
             }
         }
-        this._effectiveValueState = this.valueState;
+        // Save the original value state before setting validation error
+        if (this.valueState !== ValueState.Negative) {
+            this._effectiveValueState = this.valueState;
+        }
         if (!this._isComposing && !filteredItems.length && value && !this.noValidation) {
-            const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
-            input.value = newValue;
-            this.value = newValue;
             this.valueState = ValueState.Negative;
             this._shouldAutocomplete = false;
-            this._resetValueState(oldValueState);
-            return;
+        }
+        else if ((filteredItems.length || !value) && this.valueState === ValueState.Negative) {
+            this.valueState = this._effectiveValueState;
         }
         if (!this._isComposing) {
             this._inputLastValue = input.value;
@@ -1330,10 +1329,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 this._inputChange();
             }
             this._tokenizer.expanded = this.open;
-            // remove the value if user focus out the input and focus is not going in the popover
-            if (!isPhone() && !this.noValidation && !focusIsGoingInPopover) {
-                this.value = "";
-            }
         }
     }
     /**
@@ -1537,9 +1532,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         const isCurrentlyExpanded = this._tokenizer?.expanded;
         const shouldBeExpanded = this.focused || this.open || isCurrentlyExpanded;
         return shouldBeExpanded;
-    }
-    get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? "Start" : "End";
     }
     get iconsCount() {
         const slottedIconsCount = this.icon?.length || 0;

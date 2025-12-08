@@ -15,7 +15,7 @@ import { isSpace, isUp, isDown, isEnter, isEscape, isHome, isEnd, isShow, isTabN
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, registerUI5Element, deregisterUI5Element, getAllAccessibleDescriptionRefTexts, getEffectiveAriaDescriptionText, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import SelectTwoColumnSeparator from "./types/SelectTwoColumnSeparator.js";
+import SelectTextSeparator from "./types/SelectTextSeparator.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -136,7 +136,7 @@ let Select = Select_1 = class Select extends UI5Element {
          * @public
          * @since 2.16.0
          */
-        this.twoColumnSeparator = "Dash";
+        this.textSeparator = "Dash";
         /**
          * @private
          */
@@ -337,12 +337,12 @@ let Select = Select_1 = class Select extends UI5Element {
         return undefined;
     }
     get _separatorSymbol() {
-        switch (this.twoColumnSeparator) {
-            case SelectTwoColumnSeparator.Bullet:
+        switch (this.textSeparator) {
+            case SelectTextSeparator.Bullet:
                 return "·"; // Middle dot (U+00B7)
-            case SelectTwoColumnSeparator.VerticalLine:
+            case SelectTextSeparator.VerticalLine:
                 return "|"; // Vertical line (U+007C)
-            case SelectTwoColumnSeparator.Dash:
+            case SelectTextSeparator.Dash:
             default:
                 return "–"; // En dash (U+2013)
         }
@@ -774,6 +774,17 @@ let Select = Select_1 = class Select extends UI5Element {
         const ids = [this.valueStateTextId, this.ariaDescriptionTextId].filter(Boolean);
         return ids.length ? ids.join(" ") : undefined;
     }
+    get accessibilityInfo() {
+        return {
+            role: "combobox",
+            type: this._ariaRoleDescription,
+            description: this.text,
+            label: this.ariaLabelText,
+            readonly: this.readonly,
+            required: this.required,
+            disabled: this.disabled,
+        };
+    }
     _updateAssociatedLabelsTexts() {
         this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
     }
@@ -816,7 +827,7 @@ __decorate([
 ], Select.prototype, "tooltip", void 0);
 __decorate([
     property()
-], Select.prototype, "twoColumnSeparator", void 0);
+], Select.prototype, "textSeparator", void 0);
 __decorate([
     property({ type: String, noAttribute: true })
 ], Select.prototype, "_associatedDescriptionRefTexts", void 0);

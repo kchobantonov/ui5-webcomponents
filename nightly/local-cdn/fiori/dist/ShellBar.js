@@ -38,7 +38,7 @@ import ShellBarTemplate from "./ShellBarTemplate.js";
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
-import { SHELLBAR_LABEL, SHELLBAR_LOGO, SHELLBAR_NOTIFICATIONS, SHELLBAR_NOTIFICATIONS_NO_COUNT, SHELLBAR_CANCEL, SHELLBAR_PROFILE, SHELLBAR_PRODUCTS, SHELLBAR_SEARCH, SHELLBAR_SEARCH_FIELD, SHELLBAR_OVERFLOW, SHELLBAR_LOGO_AREA, SHELLBAR_ADDITIONAL_CONTEXT, SHELLBAR_SEARCHFIELD_DESCRIPTION, SHELLBAR_SEARCH_BTN_OPEN, SHELLBAR_PRODUCT_SWITCH_BTN, } from "./generated/i18n/i18n-defaults.js";
+import { SHELLBAR_LABEL, SHELLBAR_LOGO, SHELLBAR_NOTIFICATIONS, SHELLBAR_NOTIFICATIONS_NO_COUNT, SHELLBAR_CANCEL, SHELLBAR_PROFILE, SHELLBAR_PRODUCTS, SHELLBAR_SEARCH, SHELLBAR_SEARCH_FIELD, SHELLBAR_OVERFLOW, SHELLBAR_LOGO_AREA, SHELLBAR_ADDITIONAL_CONTEXT, SHELLBAR_SEARCHFIELD_DESCRIPTION, SHELLBAR_SEARCH_BTN_OPEN, SHELLBAR_PRODUCT_SWITCH_BTN, SHELLBAR_IMAGE_BTN, } from "./generated/i18n/i18n-defaults.js";
 const RESIZE_THROTTLE_RATE = 200; // ms
 // actions always visible in lean mode, order is important
 const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
@@ -956,9 +956,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     get showMenuButton() {
         return this.primaryTitle || this.showLogoInMenuButton;
     }
-    get popoverHorizontalAlign() {
-        return this.effectiveDir === "rtl" ? "Start" : "End";
-    }
     get hasAssistant() {
         return !!this.assistant.length;
     }
@@ -978,7 +975,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         return this.menuItems.length > 0;
     }
     get imageBtnText() {
-        return getEffectiveAriaLabelText(this);
+        return getEffectiveAriaLabelText(this) || ShellBar_1.i18nBundle.getText(SHELLBAR_IMAGE_BTN);
     }
     get _shellbarText() {
         return ShellBar_1.i18nBundle.getText(SHELLBAR_LABEL);

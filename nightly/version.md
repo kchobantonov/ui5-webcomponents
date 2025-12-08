@@ -1,7 +1,7 @@
-commit 7977d02e25c8d0f916f1e2cd8399e974c89eaf05
-Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
-Date:   Tue Nov 4 16:13:59 2025 +0200
+commit 4a52be6b82adfd4e8fe91616e995a3ead15c6919
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Dec 5 18:14:08 2025 +0200
 
-    refactor(ui5-side-navigation): allow long item texts to wrap instead of truncating (#12577)
+    fix(ui5-button): fix end-icon margin (#12777)
     
-    JIRA: BGSOFUIRODOPI-3547
+    fix: #12710

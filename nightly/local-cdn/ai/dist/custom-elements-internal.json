@@ -420,6 +420,17 @@
               "_ui5Bubbles": false
             },
             {
+              "name": "item-click",
+              "_ui5privacy": "public",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when an item from the AI actions menu is clicked.",
+              "_ui5Cancelable": false,
+              "_ui5allowPreventDefault": false,
+              "_ui5Bubbles": false
+            },
+            {
               "name": "stop-generation",
               "_ui5privacy": "public",
               "type": {
@@ -434,7 +445,14 @@
               "name": "version-change",
               "_ui5privacy": "public",
               "type": {
-                "text": "CustomEvent<undefined>"
+                "text": "CustomEvent<InputVersionChangeEventDetail>",
+                "references": [
+                  {
+                    "name": "InputVersionChangeEventDetail",
+                    "package": "@ui5/webcomponents-ai",
+                    "module": "dist/Input.js"
+                  }
+                ]
               },
               "description": "Fired when the user selects the version navigation buttons.",
               "_ui5Cancelable": false,
@@ -482,7 +500,7 @@
             }
           ],
           "superclass": {
-            "name": "BaseInput",
+            "name": "Input",
             "package": "@ui5/webcomponents",
             "module": "dist/Input.js"
           },
@@ -890,12 +908,29 @@
               "name": "version-change",
               "_ui5privacy": "public",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<TextAreaVersionChangeEventDetail>",
+                "references": [
+                  {
+                    "name": "TextAreaVersionChangeEventDetail",
+                    "package": "@ui5/webcomponents-ai",
+                    "module": "dist/TextArea.js"
+                  }
+                ]
               },
               "description": "Fired when the user clicks on version navigation buttons.",
               "_ui5Cancelable": false,
               "_ui5allowPreventDefault": false,
-              "_ui5Bubbles": false
+              "_ui5Bubbles": false,
+              "_ui5parameters": [
+                {
+                  "type": {
+                    "text": "boolean"
+                  },
+                  "name": "backwards",
+                  "_ui5privacy": "public",
+                  "description": "Indicates if navigation is backwards (true) or forwards (false, default)."
+                }
+              ]
             },
             {
               "name": "stop-generation",
@@ -948,7 +983,7 @@
             }
           ],
           "superclass": {
-            "name": "BaseTextArea",
+            "name": "TextArea",
             "package": "@ui5/webcomponents",
             "module": "dist/TextArea.js"
           },

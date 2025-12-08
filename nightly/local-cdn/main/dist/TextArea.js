@@ -373,9 +373,6 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
     get hasValueState() {
         return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
     }
-    get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? "Start" : "End";
-    }
     get valueStateTextMappings() {
         return {
             "Positive": TextArea_1.i18nBundle.getText(VALUE_STATE_SUCCESS),

@@ -77,6 +77,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
+ * @csspart input - Used to style the input element. This part is forwarded to the underlying ui5-input element.
  */
 declare class TimePicker extends UI5Element implements IFormInputElement {
     eventDetails: {
@@ -237,6 +238,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      */
     get _iconMode(): IconMode.Decorative | IconMode.Interactive;
     onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>): void;
+    get openIconTitle(): string;
     _togglePicker(): void;
     submitPickers(): void;
     onResponsivePopoverAfterClose(): void;
@@ -311,6 +313,13 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get hasValueStateText(): boolean;
     get hasValueState(): boolean;
     get shouldDisplayValueStateMessageOnDesktop(): boolean;
+    get _headerTitleText(): string;
+    get showHeader(): boolean;
+    /**
+     * Defines whether the dialog on mobile should have header
+     * @private
+     */
+    get _shouldHideHeader(): boolean;
     /**
      * @protected
      */

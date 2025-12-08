@@ -12,7 +12,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isShow, isBackSpace, isLeft, isRight, isRightCtrl, isHome, isEnd, isDown, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL, MULTIINPUT_VALUE_HELP } from "./generated/i18n/i18n-defaults.js";
+import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL, MULTIINPUT_VALUE_HELP, MULTIINPUT_FILTER_BUTTON_LABEL, } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./MultiInputTemplate.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -69,6 +69,18 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
          * @private
          */
         this.tokenizerAvailable = false;
+        /**
+         * Indicates whether to show tokens in suggestions popover
+         * @default false
+         * @private
+         */
+        this._showTokensInSuggestions = false;
+        /**
+         * Tracks whether user has explicitly toggled the show tokens state
+         * @default false
+         * @private
+         */
+        this._userToggledShowTokens = false;
         // Prevent suggestions' opening.
         this._skipOpenSuggestions = false;
         this._valueHelpIconPressed = false;
@@ -216,6 +228,20 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
         if (this.tokenizer) {
             this.tokenizer.readonly = this.readonly;
         }
+        // Reset toggle state if there are tokens and dialog is about to open
+        if (this.tokens.length > 0 && !this._userToggledShowTokens) {
+            this._showTokensInSuggestions = true;
+        }
+    }
+    /**
+     * Override the _handlePickerAfterOpen method to reset toggle state when dialog opens with tokens
+     */
+    _handlePickerAfterOpen() {
+        if (this.tokens.length > 0) {
+            this._showTokensInSuggestions = true;
+            this._userToggledShowTokens = false;
+        }
+        super._handlePickerAfterOpen();
     }
     onAfterRendering() {
         super.onAfterRendering();
@@ -235,6 +261,9 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
     }
     get _valueHelpText() {
         return MultiInput_1.i18nBundle.getText(MULTIINPUT_VALUE_HELP);
+    }
+    get _filterButtonAccessibleName() {
+        return MultiInput_1.i18nBundle.getText(MULTIINPUT_FILTER_BUTTON_LABEL);
     }
     get _tokensCountTextId() {
         return `hiddenText-nMore`;
@@ -275,6 +304,22 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
     get shouldDisplayOnlyValueStateMessage() {
         return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer.open;
     }
+    /**
+     * Computes the effective state for showing tokens in suggestions.
+     * Defaults to true when tokens exist, but respects explicit user toggle.
+     */
+    get _effectiveShowTokensInSuggestions() {
+        // If no tokens exist, always false
+        if (this.tokens.length === 0) {
+            return false;
+        }
+        // If user has never interacted with the toggle, default to true when tokens exist
+        if (!this._userToggledShowTokens) {
+            return true;
+        }
+        // If user has interacted, respect their choice
+        return this._showTokensInSuggestions;
+    }
 };
 __decorate([
     property({ type: Boolean })
@@ -285,6 +330,12 @@ __decorate([
 __decorate([
     property()
 ], MultiInput.prototype, "name", void 0);
+__decorate([
+    property({ type: Boolean })
+], MultiInput.prototype, "_showTokensInSuggestions", void 0);
+__decorate([
+    property({ type: Boolean })
+], MultiInput.prototype, "_userToggledShowTokens", void 0);
 __decorate([
     slot({ type: HTMLElement, individualSlots: true })
 ], MultiInput.prototype, "tokens", void 0);

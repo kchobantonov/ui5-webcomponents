@@ -26,7 +26,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import { isShow, isEnter, isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl, isPageDownShiftCtrl, isTabNext, isTabPrevious, isF6Next, isF6Previous, } from "@ui5/webcomponents-base/dist/Keys.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import TimePickerTemplate from "./TimePickerTemplate.js";
-import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, TIMEPICKER_INPUT_DESCRIPTION, TIMEPICKER_POPOVER_ACCESSIBLE_NAME, DATETIME_COMPONENTS_PLACEHOLDER_PREFIX, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, TIMEPICKER_VALUE_MISSING, TIMEPICKER_PATTERN_MISSMATCH, } from "./generated/i18n/i18n-defaults.js";
+import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, TIMEPICKER_INPUT_DESCRIPTION, TIMEPICKER_POPOVER_ACCESSIBLE_NAME, DATETIME_COMPONENTS_PLACEHOLDER_PREFIX, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, TIMEPICKER_VALUE_MISSING, TIMEPICKER_PATTERN_MISSMATCH, TIMEPICKER_OPEN_ICON_TITLE_OPENED, TIMEPICKER_OPEN_ICON_TITLE, INPUT_SUGGESTIONS_TITLE, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
@@ -93,6 +93,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
+ * @csspart input - Used to style the input element. This part is forwarded to the underlying ui5-input element.
  */
 let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     constructor() {
@@ -247,6 +248,12 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     }
     onTimeSelectionChange(e) {
         this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
+    }
+    get openIconTitle() {
+        if (this.open) {
+            return TimePicker_1.i18nBundle.getText(TIMEPICKER_OPEN_ICON_TITLE_OPENED);
+        }
+        return TimePicker_1.i18nBundle.getText(TIMEPICKER_OPEN_ICON_TITLE);
     }
     _togglePicker() {
         this.open = !this.open;
@@ -544,6 +551,19 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     }
     get shouldDisplayValueStateMessageOnDesktop() {
         return this.valueStateMessage.length > 0 && !this.open && !this._isMobileDevice;
+    }
+    get _headerTitleText() {
+        return this.ariaLabelText || TimePicker_1.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+    }
+    get showHeader() {
+        return isPhone();
+    }
+    /**
+     * Defines whether the dialog on mobile should have header
+     * @private
+     */
+    get _shouldHideHeader() {
+        return !this.showHeader && !this.hasValueStateText;
     }
     /**
      * @protected

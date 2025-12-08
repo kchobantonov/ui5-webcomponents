@@ -128,44 +128,14 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
         if (this.dynamicPageHeader) {
             this.dynamicPageHeader._snapped = this._headerSnapped;
         }
+    }
+    get endAreaHeight() {
+        return this.showFooter ? this.footerWrapper?.getBoundingClientRect().height || 0 : 0;
+    }
+    get topAreaHeight() {
         const titleHeight = this.dynamicPageTitle?.getBoundingClientRect().height || 0;
         const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
-        const footerHeight = this.showFooter ? this.footerWrapper?.getBoundingClientRect().height : 0;
-        if (this.scrollContainer) {
-            this.scrollContainer.style.setProperty("scroll-padding-block-end", `${footerHeight}px`);
-            if (this._headerSnapped) {
-                this.scrollContainer.style.setProperty("scroll-padding-block-start", `${titleHeight}px`);
-            }
-            else {
-                this.scrollContainer.style.setProperty("scroll-padding-block-start", `${headerHeight + titleHeight}px`);
-            }
-        }
-    }
-    onAfterRendering() {
-        if (this.scrollContainer) {
-            if (this._focusInHandler) {
-                this.scrollContainer.removeEventListener("focusin", this._focusInHandler);
-            }
-            this._focusInHandler = (e) => {
-                const target = e.target;
-                if (!target || target === this.scrollContainer) {
-                    return;
-                }
-                if (this.dynamicPageHeader?.contains(target) || this.dynamicPageTitle?.contains(target)) {
-                    return;
-                }
-                requestAnimationFrame(() => {
-                    target.scrollIntoView({ behavior: "smooth", block: "nearest" });
-                });
-            };
-            this.scrollContainer.addEventListener("focusin", this._focusInHandler);
-        }
-    }
-    onExitDOM() {
-        if (this.scrollContainer && this._focusInHandler) {
-            this.scrollContainer.removeEventListener("focusin", this._focusInHandler);
-            this._focusInHandler = undefined;
-        }
+        return this._headerSnapped ? titleHeight : headerHeight + titleHeight;
     }
     get dynamicPageTitle() {
         return this.querySelector("[ui5-dynamic-page-title]");
@@ -334,13 +304,31 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
             this.scrollContainer.scrollTop = SCROLL_THRESHOLD;
         }
     }
-    async onExpandHoverIn() {
+    onExpandHoverIn() {
         this.dynamicPageTitle?.setAttribute("hovered", "");
-        await renderFinished();
     }
-    async onExpandHoverOut() {
+    onExpandHoverOut() {
         this.dynamicPageTitle?.removeAttribute("hovered");
-        await renderFinished();
+    }
+    onContentFocusIn(e) {
+        const target = e.target;
+        this.setScrollPadding({ start: this.topAreaHeight, end: this.endAreaHeight });
+        // textareas and similar elements appear "in view" even when partially
+        // hidden behind sticky header/footer.
+        // manual scroll brings them fully into view.
+        // another issue is that browsers do not reflect dynamic changes of scroll-padding
+        requestAnimationFrame(() => {
+            target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+    }
+    onContentFocusOut() {
+        // Reset scroll padding when focus leaves content (e.g., moves to sticky header).
+        // The sticky header is part of the scrollable area, so keeping padding causes unwanted scroll.
+        this.setScrollPadding({ start: 0, end: 0 });
+    }
+    setScrollPadding(padding) {
+        this.scrollContainer?.style.setProperty("scroll-padding-top", `${padding.start}px`);
+        this.scrollContainer?.style.setProperty("scroll-padding-bottom", `${padding.end}px`);
     }
 };
 __decorate([

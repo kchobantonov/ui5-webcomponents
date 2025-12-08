@@ -126,6 +126,9 @@ let DynamicPageTitle = DynamicPageTitle_1 = class DynamicPageTitle extends UI5El
         return this.interactive ? DynamicPageTitle_1.i18nBundle.getText(DYNAMIC_PAGE_ARIA_DESCR_TOGGLE_HEADER) : undefined;
     }
     get _ariaLabelledBy() {
+        if (!this.interactive) {
+            return undefined;
+        }
         const hasAnyHeading = this[this.headingSlotName].length;
         if (hasAnyHeading) {
             return `${this._id}-heading`;

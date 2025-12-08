@@ -212,6 +212,7 @@ TextArea = TextArea_1 = __decorate([
     /**
      * Fired when the user clicks on version navigation buttons.
      *
+     * @param {boolean} backwards - Indicates if navigation is backwards (true) or forwards (false, default).
      * @public
      */
     ,

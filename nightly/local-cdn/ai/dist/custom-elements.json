@@ -381,6 +381,13 @@
               "description": "Fired when the user selects the AI button."
             },
             {
+              "name": "item-click",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when an item from the AI actions menu is clicked."
+            },
+            {
               "name": "stop-generation",
               "type": {
                 "text": "CustomEvent"
@@ -390,7 +397,14 @@
             {
               "name": "version-change",
               "type": {
-                "text": "CustomEvent<undefined>"
+                "text": "CustomEvent<InputVersionChangeEventDetail>",
+                "references": [
+                  {
+                    "name": "InputVersionChangeEventDetail",
+                    "package": "@ui5/webcomponents-ai",
+                    "module": "dist/Input.js"
+                  }
+                ]
               },
               "description": "Fired when the user selects the version navigation buttons."
             }
@@ -425,7 +439,7 @@
             }
           ],
           "superclass": {
-            "name": "BaseInput",
+            "name": "Input",
             "package": "@ui5/webcomponents",
             "module": "dist/Input.js"
           },
@@ -782,7 +796,14 @@
             {
               "name": "version-change",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<TextAreaVersionChangeEventDetail>",
+                "references": [
+                  {
+                    "name": "TextAreaVersionChangeEventDetail",
+                    "package": "@ui5/webcomponents-ai",
+                    "module": "dist/TextArea.js"
+                  }
+                ]
               },
               "description": "Fired when the user clicks on version navigation buttons."
             },
@@ -833,7 +854,7 @@
             }
           ],
           "superclass": {
-            "name": "BaseTextArea",
+            "name": "TextArea",
             "package": "@ui5/webcomponents",
             "module": "dist/TextArea.js"
           },

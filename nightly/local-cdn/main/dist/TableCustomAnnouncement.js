@@ -3,34 +3,29 @@ import I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { TABLE_ROW, TABLE_ROW_INDEX, TABLE_ROW_SELECTED, TABLE_ROW_ACTIVE, TABLE_ROW_NAVIGABLE, TABLE_ROW_NAVIGATED, TABLE_COLUMN_HEADER_ROW, TABLE_CELL_SINGLE_CONTROL, TABLE_CELL_MULTIPLE_CONTROLS, TABLE_ACC_STATE_EMPTY, TABLE_ACC_STATE_REQUIRED, TABLE_ACC_STATE_DISABLED, TABLE_ACC_STATE_READONLY, } from "./generated/i18n/i18n-defaults.js";
 let invisibleText;
-const i18nBundle = new I18nBundle("@ui5/webcomponents/main");
+const i18nBundle = new I18nBundle("@ui5/webcomponents");
 const checkVisibility = (element) => {
     return element.checkVisibility() || getComputedStyle(element).display === "contents";
 };
 const updateInvisibleText = (element, text = []) => {
-    const invisibleTextId = "ui5-table-invisible-text";
     if (!invisibleText || !invisibleText.isConnected) {
         invisibleText = document.createElement("span");
-        invisibleText.id = invisibleTextId;
+        invisibleText.id = "ui5-table-invisible-text";
         invisibleText.ariaHidden = "true";
         invisibleText.style.display = "none";
         document.body.appendChild(invisibleText);
     }
-    let ariaLabelledBy = (element.getAttribute("aria-labelledby") || "").split(" ").filter(Boolean);
-    const invisibleTextAssociated = ariaLabelledBy.includes(invisibleTextId);
+    const ariaLabelledByElements = [...(element.ariaLabelledByElements || [])];
+    const invisibleTextIndex = ariaLabelledByElements.indexOf(invisibleText);
     text = Array.isArray(text) ? text.filter(Boolean).join(" . ").trim() : text.trim();
-    if (text && !invisibleTextAssociated) {
-        ariaLabelledBy.push(invisibleTextId);
-    }
-    else if (!text && invisibleTextAssociated) {
-        ariaLabelledBy = ariaLabelledBy.filter(id => id !== invisibleTextId);
-    }
     invisibleText.textContent = text;
-    if (ariaLabelledBy.length > 0) {
-        element.setAttribute("aria-labelledby", ariaLabelledBy.join(" "));
+    if (text && invisibleTextIndex === -1) {
+        ariaLabelledByElements.unshift(invisibleText);
+        element.ariaLabelledByElements = ariaLabelledByElements;
     }
-    else {
-        element.removeAttribute("aria-labelledby");
+    else if (!text && invisibleTextIndex > -1) {
+        ariaLabelledByElements.splice(invisibleTextIndex, 1);
+        element.ariaLabelledByElements = ariaLabelledByElements.length ? ariaLabelledByElements : null;
     }
 };
 const getAccessibilityDescription = (element, lessDetails = false, _isRootElement = true) => {

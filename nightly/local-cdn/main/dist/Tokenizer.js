@@ -168,6 +168,8 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
         this._preventCollapse = false;
         this._skipTabIndex = false;
         this._previousToken = null;
+        this._lastFocusedToken = null;
+        this._isFocusSetInternally = false;
         /**
          * Scroll to end when tokenizer is expanded
          * @private
@@ -250,7 +252,7 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
         const tokensArray = this._tokens;
         const firstToken = tokensArray[0];
         this._nMoreCount = this.overflownTokens.length;
-        if (firstToken && !this.disabled && !this.preventInitialFocus && !this._skipTabIndex) {
+        if (firstToken && !this.disabled && !this.preventInitialFocus && !this._skipTabIndex && !this._isFocusSetInternally) {
             firstToken.forcedTabIndex = "0";
         }
         if (this._scrollEnablement) {
@@ -601,6 +603,7 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
     }
     _onfocusin(e) {
         const target = e.target;
+        this._lastFocusedToken = target;
         if (target && target.toBeDeleted) {
             this._tokenDeleting = true;
             return;
@@ -622,12 +625,29 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
         this._skipTabIndex = true;
         if (!this.contains(relatedTarget)) {
             this._tokens[0].forcedTabIndex = "0";
+            this._isFocusSetInternally = false;
             this._skipTabIndex = false;
         }
         if (!this._tokenDeleting && !this._preventCollapse) {
             this._preventCollapse = false;
             this.expanded = false;
         }
+    }
+    /**
+     * Determines the DOM element to focus when the Tokenizer receives focus.
+     * If the last-focused token is not overflown, focus is restored to it.
+     * Otherwise, the focus defaults to the first visible token.
+     */
+    getFocusDomRef() {
+        if (this._lastFocusedToken && !this.overflownTokens.includes(this._lastFocusedToken)) {
+            this._itemNav._currentIndex = this.tokens.indexOf(this._lastFocusedToken);
+            this._isFocusSetInternally = true;
+            this.tokens[0].forcedTabIndex = "-1";
+        }
+        else {
+            this._itemNav._currentIndex = 0;
+        }
+        return this._itemNav._getCurrentItem();
     }
     _toggleTokenSelection(tokens) {
         if (!tokens || !tokens.length) {

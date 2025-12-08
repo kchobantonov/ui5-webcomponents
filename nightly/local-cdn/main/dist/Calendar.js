@@ -270,6 +270,17 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         const date = this.getFormat().parse(dateString);
         return !!date;
     }
+    get _disabledDates() {
+        const validDisabledDateRanges = this.disabledDates.filter(dateRange => {
+            const startValue = dateRange.startValue;
+            const endValue = dateRange.endValue;
+            return (startValue && this._isValidCalendarDate(startValue)) || (endValue && this._isValidCalendarDate(endValue));
+        });
+        return validDisabledDateRanges.map(dateRange => ({
+            startValue: dateRange.startValue,
+            endValue: dateRange.endValue,
+        }));
+    }
     get _specialCalendarDates() {
         const hasSelectedType = this._specialDates.some(date => date.type === this._selectedItemType);
         const validSpecialDates = this._specialDates.filter(date => {
@@ -746,6 +757,9 @@ __decorate([
 __decorate([
     slot({ type: HTMLElement, invalidateOnChildChange: true })
 ], Calendar.prototype, "specialDates", void 0);
+__decorate([
+    slot({ type: HTMLElement, invalidateOnChildChange: true })
+], Calendar.prototype, "disabledDates", void 0);
 __decorate([
     property()
 ], Calendar.prototype, "_selectedItemType", void 0);

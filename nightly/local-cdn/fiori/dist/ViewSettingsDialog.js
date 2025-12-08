@@ -52,6 +52,7 @@ import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js"
  * @extends UI5Element
  * @since 1.0.0-rc.16
  * @public
+ * @csspart header - Used to style the header.
  */
 let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends UI5Element {
     constructor() {

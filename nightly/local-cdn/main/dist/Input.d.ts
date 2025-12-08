@@ -11,7 +11,6 @@ import type InputSuggestions from "./features/InputSuggestions.js";
 import InputType from "./types/InputType.js";
 import type Popover from "./Popover.js";
 import type { IIcon } from "./Icon.js";
-import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type InputKeyHint from "./types/InputKeyHint.js";
@@ -568,7 +567,6 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
      * This method is relevant for sap_horizon theme only
      */
     get _valueStateInputIcon(): string;
-    get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}`;
     /**
      * This method is relevant for sap_horizon theme only
      */

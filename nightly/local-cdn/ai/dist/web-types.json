@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "@ui5/webcomponents-ai",
-  "version": "2.16.0-rc.3",
+  "version": "2.17.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -166,7 +166,7 @@
         },
         {
           "name": "ui5-ai-input",
-          "description": "### Overview\n\nThe `ui5-ai-input` component extends the standard `ui5-input` with **AI Writing Assistant** capabilities.\n\n### Structure\n\nThe `ui5-ai-input` consists of the following main parts:\n\n- **Input Field** – Inherits all standard Input behaviors.\n- **AI Action Button** – Appears when focused or loading, providing access to AI-related actions or stopping generation.\n\nThe component automatically determines which elements to render based on its internal state:\n- The AI Button is only shown when there are available `actions`.\n- The version navigation appears only when `totalVersions > 1`.\n\n### Keyboard Support\n\n- **Shift + F4** — Opens the AI menu.\n- **Ctrl + Shift + Z / Y** — Navigates backward/forward between AI-generated versions.\n\n### ES6 Module Import\n\n`import \"@ui5/webcomponents-ai/dist/Input.js\";`\n---\n\n\n### **Events:**\n - **button-click** - Fired when the user selects the AI button.\n- **stop-generation** - Fired when the user selects the \"Stop\" button to stop ongoing AI text generation.\n- **version-change** - Fired when the user selects the version navigation buttons.\n\n### **Slots:**\n - **actions** - Defines the items of the menu for the component.",
+          "description": "### Overview\n\nThe `ui5-ai-input` component extends the standard `ui5-input` with **AI Writing Assistant** capabilities.\n\n### Structure\n\nThe `ui5-ai-input` consists of the following main parts:\n\n- **Input Field** – Inherits all standard Input behaviors.\n- **AI Action Button** – Appears when focused or loading, providing access to AI-related actions or stopping generation.\n\nThe component automatically determines which elements to render based on its internal state:\n- The AI Button is only shown when there are available `actions`.\n- The version navigation appears only when `totalVersions > 1`.\n\n### Keyboard Support\n\n- **Shift + F4** — Opens the AI menu.\n- **Ctrl + Shift + Z / Y** — Navigates backward/forward between AI-generated versions.\n\n### ES6 Module Import\n\n`import \"@ui5/webcomponents-ai/dist/Input.js\";`\n---\n\n\n### **Events:**\n - **button-click** - Fired when the user selects the AI button.\n- **item-click** - Fired when an item from the AI actions menu is clicked.\n- **stop-generation** - Fired when the user selects the \"Stop\" button to stop ongoing AI text generation.\n- **version-change** - Fired when the user selects the version navigation buttons.\n\n### **Slots:**\n - **actions** - Defines the items of the menu for the component.",
           "doc-url": "",
           "attributes": [
             {
@@ -195,6 +195,10 @@
             {
               "name": "button-click",
               "description": "Fired when the user selects the AI button."
+            },
+            {
+              "name": "item-click",
+              "description": "Fired when an item from the AI actions menu is clicked."
             },
             {
               "name": "stop-generation",
@@ -227,6 +231,10 @@
               {
                 "name": "button-click",
                 "description": "Fired when the user selects the AI button."
+              },
+              {
+                "name": "item-click",
+                "description": "Fired when an item from the AI actions menu is clicked."
               },
               {
                 "name": "stop-generation",

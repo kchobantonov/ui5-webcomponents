@@ -24,7 +24,7 @@ import { isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, DATETIME_COMPONENTS_PLACEHOLDER_PREFIX, INPUT_SUGGESTIONS_TITLE, DATEPICKER_POPOVER_ACCESSIBLE_NAME, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, DATEPICKER_VALUE_MISSING, DATEPICKER_PATTERN_MISSMATCH, DATEPICKER_RANGE_UNDERFLOW, DATEPICKER_RANGE_OVERFLOW, } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_OPEN_ICON_TITLE_OPENED, DATEPICKER_DATE_DESCRIPTION, DATETIME_COMPONENTS_PLACEHOLDER_PREFIX, INPUT_SUGGESTIONS_TITLE, DATEPICKER_POPOVER_ACCESSIBLE_NAME, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, DATEPICKER_VALUE_MISSING, DATEPICKER_PATTERN_MISSMATCH, DATEPICKER_RANGE_UNDERFLOW, DATEPICKER_RANGE_OVERFLOW, } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import InputType from "./types/InputType.js";
 import IconMode from "./types/IconMode.js";
@@ -115,6 +115,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  * @constructor
  * @extends DateComponentBase
  * @public
+ * @csspart input - Used to style the input element. This part is forwarded to the underlying ui5-input element.
  */
 let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     constructor() {
@@ -345,7 +346,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
             this._updateValueState();
         }
         events.forEach(e => {
-            if (!this.fireDecoratorEvent(e, { value, valid })) {
+            if (!this.fireDecoratorEvent(e, { value: this.value, valid })) {
                 executeEvent = false;
             }
         });
@@ -610,6 +611,9 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         return this.valueState !== ValueState.None;
     }
     get openIconTitle() {
+        if (this.open) {
+            return DatePicker_1.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE_OPENED);
+        }
         return DatePicker_1.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
     }
     get openIconName() {

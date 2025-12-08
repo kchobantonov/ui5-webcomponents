@@ -4,7 +4,6 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type Popover from "./Popover.js";
-import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 type TokenizedText = Array<string>;
 type IndexedTokenizedText = Array<{
     text: string;
@@ -271,7 +270,6 @@ declare class TextArea extends UI5Element implements IFormInputElement {
     get displayValueStateMessagePopover(): boolean;
     get hasCustomValueState(): boolean;
     get hasValueState(): boolean;
-    get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}`;
     get valueStateTextMappings(): {
         Positive: string;
         Information: string;

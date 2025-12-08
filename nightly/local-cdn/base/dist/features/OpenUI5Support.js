@@ -25,7 +25,7 @@ class OpenUI5Support {
             OpenUI5Support.initPromise = new Promise(resolve => {
                 window.sap.ui.require(["sap/ui/core/Core"], async (Core) => {
                     const callback = () => {
-                        let deps = ["sap/ui/core/Popup", "sap/m/Dialog", "sap/m/Popover", "sap/ui/core/Patcher", "sap/ui/core/LocaleData"];
+                        let deps = ["sap/ui/core/Popup", "sap/m/Dialog", "sap/ui/core/Patcher", "sap/ui/core/LocaleData"];
                         if (OpenUI5Support.isAtLeastVersion116()) { // for versions since 1.116.0 and onward, use the modular core
                             deps = [
                                 ...deps,
@@ -36,9 +36,9 @@ class OpenUI5Support {
                                 "sap/ui/core/date/CalendarUtils",
                             ];
                         }
-                        window.sap.ui.require(deps, (Popup, Dialog, Popover, Patcher) => {
+                        window.sap.ui.require(deps, (Popup, Dialog, Patcher) => {
                             patchPatcher(Patcher);
-                            patchPopup(Popup, Dialog, Popover);
+                            patchPopup(Popup, Dialog);
                             resolve();
                         });
                     };

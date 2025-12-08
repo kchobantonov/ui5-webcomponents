@@ -17,7 +17,6 @@ import type List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import "./ComboBoxItemGroup.js";
 import type ComboBoxFilter from "./types/ComboBoxFilter.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type { InputEventDetail } from "./Input.js";
 import type InputComposition from "./features/InputComposition.js";
 /**
@@ -349,7 +348,6 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     get valueStateTypeMappings(): ValueStateTypeAnnouncement;
     get shouldOpenValueStateMessagePopover(): boolean;
     get shouldDisplayDefaultValueStateMessage(): boolean;
-    get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}`;
     /**
      * This method is relevant for sap_horizon theme only
      */

@@ -243,7 +243,7 @@ let DateTimePicker = DateTimePicker_1 = class DateTimePicker extends DatePicker 
      * @private
      */
     get _shouldHideHeader() {
-        return true;
+        return false;
     }
     /**
      * EVENT HANDLERS

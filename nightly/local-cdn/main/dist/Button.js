@@ -23,8 +23,9 @@ import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseE
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED, BUTTON_ARIA_TYPE_ATTENTION, BUTTON_BADGE_ONE_ITEM, BUTTON_BADGE_MANY_ITEMS, } from "./generated/i18n/i18n-defaults.js";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED, BUTTON_ARIA_TYPE_ATTENTION, BUTTON_BADGE_ONE_ITEM, BUTTON_BADGE_MANY_ITEMS, BUTTON_ROLE_DESCRIPTION, LINK_ROLE_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
 let isGlobalHandlerAttached = false;
@@ -392,6 +393,24 @@ let Button = Button_1 = class Button extends UI5Element {
             ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
             ariaLabel: this.accessibilityAttributes.ariaLabel || this.ariaLabelText,
         };
+    }
+    get accessibilityInfo() {
+        return {
+            description: this.ariaDescriptionText,
+            role: this.effectiveAccRole,
+            disabled: this.disabled,
+            children: this.text,
+            type: this.effectiveAccRoleTranslation,
+        };
+    }
+    get effectiveAccRoleTranslation() {
+        if (this.accessibleRole === ButtonAccessibleRole.Button) {
+            return Button_1.i18nBundle.getText(BUTTON_ROLE_DESCRIPTION);
+        }
+        if (this.accessibleRole === ButtonAccessibleRole.Link) {
+            return Button_1.i18nBundle.getText(LINK_ROLE_DESCRIPTION);
+        }
+        return "";
     }
     get effectiveBadgeDescriptionText() {
         if (!this.shouldRenderBadge) {

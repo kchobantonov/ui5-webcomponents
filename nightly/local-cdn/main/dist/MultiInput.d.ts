@@ -64,6 +64,18 @@ declare class MultiInput extends Input implements IFormInputElement {
      */
     name?: string;
     /**
+     * Indicates whether to show tokens in suggestions popover
+     * @default false
+     * @private
+     */
+    _showTokensInSuggestions: boolean;
+    /**
+     * Tracks whether user has explicitly toggled the show tokens state
+     * @default false
+     * @private
+     */
+    _userToggledShowTokens: boolean;
+    /**
      * Defines the component tokens.
      * @public
      */
@@ -91,12 +103,17 @@ declare class MultiInput extends Input implements IFormInputElement {
      */
     _onfocusin(e: FocusEvent): void;
     onBeforeRendering(): void;
+    /**
+     * Override the _handlePickerAfterOpen method to reset toggle state when dialog opens with tokens
+     */
+    _handlePickerAfterOpen(): void;
     onAfterRendering(): void;
     get iconsCount(): number;
     get tokenizer(): Tokenizer;
     get tokenizerExpanded(): boolean;
     get _tokensCountText(): string;
     get _valueHelpText(): string;
+    get _filterButtonAccessibleName(): string;
     get _tokensCountTextId(): string;
     get _valueHelpTextId(): "" | "hiddenText-value-help";
     /**
@@ -121,6 +138,11 @@ declare class MultiInput extends Input implements IFormInputElement {
     get ariaRoleDescription(): string;
     get morePopoverOpener(): HTMLElement;
     get shouldDisplayOnlyValueStateMessage(): boolean;
+    /**
+     * Computes the effective state for showing tokens in suggestions.
+     * Defaults to true when tokens exist, but respects explicit user toggle.
+     */
+    get _effectiveShowTokensInSuggestions(): boolean;
 }
 export default MultiInput;
 export type { IToken, MultiInputTokenDeleteEventDetail, MultiInputSelectionChangeEventDetail, };
