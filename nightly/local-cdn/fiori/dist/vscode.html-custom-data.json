@@ -516,6 +516,11 @@
           "name": "accessible-description",
           "description": "Defines the accessible ARIA description of the field.",
           "values": []
+        },
+        {
+          "name": "scope-value",
+          "description": "Defines the value of the component:\n\nApplications are responsible for setting the correct scope value.\n\n**Note:** If the given value does not match any existing scopes,\nno scope will be selected and the SearchField scope component will be displayed as empty.",
+          "values": []
         }
       ],
       "references": []
@@ -607,8 +612,8 @@
           "values": []
         },
         {
-          "name": "selected",
-          "description": "Indicates whether the item is selected",
+          "name": "value",
+          "description": "Defines the value of the `ui5-search-scope`.\nUsed for selection in Search scopes.",
           "values": []
         }
       ],
@@ -787,6 +792,11 @@
         {
           "name": "accessible-description",
           "description": "Defines the accessible ARIA description of the field.",
+          "values": []
+        },
+        {
+          "name": "scope-value",
+          "description": "Defines the value of the component:\n\nApplications are responsible for setting the correct scope value.\n\n**Note:** If the given value does not match any existing scopes,\nno scope will be selected and the SearchField scope component will be displayed as empty.",
           "values": []
         }
       ],
@@ -1379,6 +1389,61 @@
         {
           "name": "secondary",
           "description": "Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`\nand controls the visibility of the back button.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "ui5-user-settings-appearance-view",
+      "description": "### Overview\n\nThe `ui5-user-settings-appearance-view` represents a view displayed in the `ui5-user-settings-item`.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsAppearanceView.js\";`\n\n\n---\n\n\n\n\n### **Events:**\n - **selection-change** - Fired when an item is selected.\n\n### **Slots:**\n - **default** - Defines the items of the component.\n- **additionalContent** - Defines additional content displayed below the items list.",
+      "attributes": [
+        {
+          "name": "text",
+          "description": "Defines the title text of the user settings view.",
+          "values": []
+        },
+        {
+          "name": "selected",
+          "description": "Defines whether the view is selected. There can be just one selected view at a time.",
+          "values": []
+        },
+        {
+          "name": "secondary",
+          "description": "Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`\nand controls the visibility of the back button.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "ui5-user-settings-appearance-view-group",
+      "description": "### Overview\n\nThe `ui5-user-settings-appearance-view-group` is a special list item group used to group appearance view items.\n\nThis is the item to use inside a `ui5-user-settings-appearance-view`.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsAppearanceViewGroup.js\";`\n\n\n---\n\n\n\n\n### **Slots:**\n - **default** - Defines the items of the <code>ui5-user-settings-appearance-view-group</code>.",
+      "attributes": [],
+      "references": []
+    },
+    {
+      "name": "ui5-user-settings-appearance-view-item",
+      "description": "### Overview\n\nThe `ui5-user-settings-appearance-view-item` represents a theme/appearance option item\nwithin the `ui5-user-settings-appearance-view`.\n\nIt displays a theme with an avatar icon, text label, and can be selected.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsAppearanceViewItem.js\";`\n\n\n---\n\n\n",
+      "attributes": [
+        {
+          "name": "item-key",
+          "description": "Defines the unique identifier of the item.",
+          "values": []
+        },
+        {
+          "name": "text",
+          "description": "Defines the text label displayed for the appearance item.",
+          "values": []
+        },
+        {
+          "name": "icon",
+          "description": "Defines the icon of the appearance item.",
+          "values": []
+        },
+        {
+          "name": "color-scheme",
+          "description": "Defines the color scheme of the avatar.",
           "values": []
         }
       ],

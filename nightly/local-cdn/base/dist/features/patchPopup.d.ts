@@ -2,27 +2,32 @@ type Control = {
     getDomRef: () => HTMLElement | null;
 };
 type OpenUI5Popup = {
-    prototype: {
-        open: (...args: any[]) => void;
-        _closed: (...args: any[]) => void;
-        getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING";
-        getContent: () => Control | HTMLElement | null;
-        onFocusEvent: (...args: any[]) => void;
-    };
+    open: (...args: any[]) => void;
+    _closed: (...args: any[]) => void;
+    getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING";
+    getContent: () => Control | HTMLElement | null;
+    onFocusEvent: (...args: any[]) => void;
+    getModal: () => boolean;
 };
-type OpenUI5PopupBasedControl = {
+type OpenUI5PopupClass = {
+    prototype: OpenUI5Popup;
+};
+type OpenUI5DialogClass = {
     prototype: {
         onsapescape: (...args: any[]) => void;
         oPopup: OpenUI5Popup;
     };
 };
 type PopupInfo = {
-    type: "OpenUI5" | "WebComponent";
+    type: "WebComponent";
     instance: object;
+} | {
+    type: "OpenUI5";
+    instance: OpenUI5Popup;
 };
 declare const addOpenedPopup: (popupInfo: PopupInfo) => void;
 declare const removeOpenedPopup: (popup: object) => void;
-declare const getTopmostPopup: () => object;
-declare const patchPopup: (Popup: OpenUI5Popup, Dialog: OpenUI5PopupBasedControl) => void;
+declare const getTopmostPopup: () => object | null;
+declare const patchPopup: (Popup: OpenUI5PopupClass, Dialog: OpenUI5DialogClass) => void;
 export { patchPopup, addOpenedPopup, removeOpenedPopup, getTopmostPopup, };
-export type { OpenUI5Popup, OpenUI5PopupBasedControl, PopupInfo };
+export type { OpenUI5PopupClass, OpenUI5DialogClass, PopupInfo };

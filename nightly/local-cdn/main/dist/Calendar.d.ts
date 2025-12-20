@@ -284,6 +284,11 @@ declare class Calendar extends CalendarPart {
     switchToYearRangePicker(suppressFocus?: boolean): Promise<void>;
     get _currentPickerDOM(): ICalendarPicker;
     /**
+     * Returns the focusable element inside the Calendar (the current picker)
+     * @override
+     */
+    getFocusDomRef(): HTMLElement | undefined;
+    /**
      * The year clicked the "Previous" button in the header
      */
     onHeaderPreviousPress(): void;

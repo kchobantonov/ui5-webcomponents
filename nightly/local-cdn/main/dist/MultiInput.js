@@ -12,7 +12,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isShow, isBackSpace, isLeft, isRight, isRightCtrl, isHome, isEnd, isDown, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL, MULTIINPUT_VALUE_HELP, MULTIINPUT_FILTER_BUTTON_LABEL, } from "./generated/i18n/i18n-defaults.js";
+import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL, MULTIINPUT_VALUE_HELP, FORM_MIXED_TEXTFIELD_REQUIRED, MULTIINPUT_FILTER_BUTTON_LABEL, } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./MultiInputTemplate.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -38,6 +38,9 @@ import { getTokensCountText } from "./Tokenizer.js";
  * @public
  */
 let MultiInput = MultiInput_1 = class MultiInput extends Input {
+    get formValidityMessage() {
+        return MultiInput_1.i18nBundle.getText(FORM_MIXED_TEXTFIELD_REQUIRED);
+    }
     get formValidity() {
         const tokens = (this.tokens || []);
         return { valueMissing: this.required && !this.value && !tokens.length };

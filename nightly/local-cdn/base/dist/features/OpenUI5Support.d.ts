@@ -34,6 +34,6 @@ declare class OpenUI5Support {
     static cssVariablesLoaded(): boolean | undefined;
     static addOpenedPopup(popupInfo: PopupInfo): void;
     static removeOpenedPopup(popup: object): void;
-    static getTopmostPopup(): object;
+    static getTopmostPopup(): object | null;
 }
 export default OpenUI5Support;

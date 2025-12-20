@@ -16,7 +16,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, isEnd, isHome, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, isEnd, isHome, isDown, isUp, isF7, } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -545,9 +546,18 @@ let List = List_1 = class List extends UI5Element {
             this._handleHome();
             return;
         }
+        // Handle Arrow Up/Down navigation between internal elements
+        const isArrowKey = isUp(e) || isDown(e);
+        const listItem = this._getClosestListItem(e.target);
+        if (listItem?._isFocusOnInternalElement() && isArrowKey) {
+            const offset = isUp(e) ? -1 : 1;
+            if (this._navigateToAdjacentItem(listItem, offset)) {
+                e.preventDefault();
+                return;
+            }
+        }
         if (isDown(e)) {
-            this._handleDown();
-            e.preventDefault();
+            this._handleDown(e);
             return;
         }
         if (isCtrl(e)) {
@@ -557,6 +567,30 @@ let List = List_1 = class List extends UI5Element {
         if (isTabNext(e)) {
             this._handleTabNext(e);
         }
+        if (isF7(e)) {
+            this._handleF7(e);
+        }
+    }
+    _handleF7(e) {
+        const listItem = this._getClosestListItem(e.target);
+        if (!listItem || !listItem._hasFocusableElements()) {
+            return;
+        }
+        const listItemDomRef = listItem.getFocusDomRef();
+        const activeElement = getActiveElement();
+        e.preventDefault();
+        if (activeElement === listItemDomRef) {
+            listItem._focusInternalElement(this._lastFocusedElementIndex ?? 0);
+            this._lastFocusedElementIndex = listItem._getFocusedElementIndex();
+        }
+        else {
+            this._lastFocusedElementIndex = listItem._getFocusedElementIndex();
+            listItemDomRef.focus();
+        }
+    }
+    _getClosestListItem(element) {
+        const listItem = element.closest("[ui5-li], [ui5-li-custom]");
+        return listItem;
     }
     _moveItem(item, e) {
         if (!item || !item.movable) {
@@ -690,13 +724,35 @@ let List = List_1 = class List extends UI5Element {
         if (!this.growsWithButton) {
             return;
         }
-        this._shouldFocusGrowingButton();
-    }
-    _handleDown() {
-        if (!this.growsWithButton) {
-            return;
+        if (this._shouldFocusGrowingButton()) {
+            this.focusGrowingButton();
         }
-        this._shouldFocusGrowingButton();
+    }
+    _handleDown(e) {
+        if (this._shouldFocusGrowingButton()) {
+            this.focusGrowingButton();
+            e.preventDefault();
+        }
+    }
+    _navigateToAdjacentItem(listItem, offset) {
+        const targetInternalElementIndex = listItem?._getFocusedElementIndex();
+        if (targetInternalElementIndex === undefined || targetInternalElementIndex === -1) {
+            return false;
+        }
+        const allItems = this.getItems().filter(node => {
+            return "hasConfigurableMode" in node && node.hasConfigurableMode
+                && node._hasFocusableElements();
+        });
+        const itemIndex = allItems.indexOf(listItem) + offset;
+        const nextNode = allItems[itemIndex];
+        if (!nextNode) {
+            return false;
+        }
+        const focusedIndex = nextNode._focusInternalElement(targetInternalElementIndex);
+        if (focusedIndex !== undefined) {
+            this._lastFocusedElementIndex = focusedIndex;
+        }
+        return true;
     }
     _onfocusin(e) {
         const target = getNormalizedTarget(e.target);
@@ -834,12 +890,13 @@ let List = List_1 = class List extends UI5Element {
         }
     }
     _shouldFocusGrowingButton() {
+        if (!this.growsWithButton) {
+            return false;
+        }
         const items = this.getItems();
         const lastIndex = items.length - 1;
         const currentIndex = this._itemNavigation._currentIndex;
-        if (currentIndex !== -1 && currentIndex === lastIndex) {
-            this.focusGrowingButton();
-        }
+        return currentIndex !== -1 && currentIndex === lastIndex;
     }
     getGrowingButton() {
         return this.shadowRoot.querySelector(`[id="${this._id}-growing-btn"]`);

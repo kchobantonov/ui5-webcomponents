@@ -19,7 +19,7 @@ import type { UI5CustomEvent } from "@ui5/webcomponents-base";
  * @since 2.0.0
  * @public
  */
-declare class TableRow extends TableRowBase {
+declare class TableRow extends TableRowBase<TableCell> {
     /**
      * Defines the cells of the component.
      *

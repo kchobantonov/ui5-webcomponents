@@ -164,7 +164,7 @@ declare class DynamicDateRange extends UI5Element {
     get _hasCurrentOptionTemplate(): boolean;
     _submitValue(): void;
     _close(): void;
-    onPopoverOpen(): void;
+    onPopoverBeforeOpen(): void;
     onPopoverClose(): void;
     get currentValueText(): string;
     handleSelectionChange(e: CustomEvent): void;

@@ -104,7 +104,6 @@ class SliderBase extends UI5Element {
         this._tooltipsOpen = false;
         this._labelsOverlapping = false;
         this._hiddenTickmarks = false;
-        this._isInputValueValid = false;
         this.notResized = false;
         this._isUserInteraction = false;
         this._isInnerElementFocusing = false;
@@ -213,19 +212,6 @@ class SliderBase extends UI5Element {
             this._isUserInteraction = true;
             this._handleActionKeyPress(e);
         }
-    }
-    _onTooltipChange(e) {
-        const value = e.detail.value;
-        this._updateValueFromInput(value);
-    }
-    _updateValueFromInput(fieldValue) {
-        const value = parseFloat(fieldValue);
-        this._isInputValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
-        if (!this._isInputValueValid) {
-            return;
-        }
-        this.value = value;
-        this.fireDecoratorEvent("change");
     }
     _onKeyupBase() {
         if (this.disabled) {
@@ -665,9 +651,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], SliderBase.prototype, "_hiddenTickmarks", void 0);
-__decorate([
-    property({ type: Boolean })
-], SliderBase.prototype, "_isInputValueValid", void 0);
 SliderBase = SliderBase_1 = __decorate([
     event("change", {
         bubbles: true,

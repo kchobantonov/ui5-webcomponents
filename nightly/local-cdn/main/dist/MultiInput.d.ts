@@ -82,6 +82,7 @@ declare class MultiInput extends Input implements IFormInputElement {
     tokens: Array<IToken>;
     _skipOpenSuggestions: boolean;
     _valueHelpIconPressed: boolean;
+    get formValidityMessage(): string;
     get formValidity(): ValidityStateFlags;
     get formFormattedValue(): FormData | string | null;
     constructor();

@@ -243,16 +243,13 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         e.stopPropagation();
         this._clearFileSelection();
     }
-    _onFormSubmit(e) {
-        e.preventDefault();
-    }
     _openFileBrowser() {
         this._input.click();
     }
     _clearFileSelection() {
         this._selectedFilesNames = [];
         this.value = "";
-        this._form?.reset();
+        this._input.files = new DataTransfer().files;
         this.fireDecoratorEvent("change", {
             files: this.files,
         });
@@ -266,7 +263,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         if (this._input) {
             return this._input.files;
         }
-        return FileUploader_1._emptyFilesList;
+        return null;
     }
     onAfterRendering() {
         if (!this.value) {
@@ -352,17 +349,6 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         if (this._messagePopover) {
             this._messagePopover.open = false;
         }
-    }
-    /**
-     * in case when the component is not placed in the DOM, return empty FileList, like native input would do
-     * @private
-     */
-    static get _emptyFilesList() {
-        if (!this.emptyInput) {
-            this.emptyInput = document.createElement("input");
-            this.emptyInput.type = "file";
-        }
-        return this.emptyInput.files;
     }
     get accInfo() {
         return {

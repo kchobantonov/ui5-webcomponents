@@ -17,7 +17,7 @@ import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getEffectiveAria
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import TextAreaTemplate from "./TextAreaTemplate.js";
-import { VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
+import { VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED, FORM_TEXTFIELD_REQUIRED, TEXTAREA_EXCEEDS_MAXLENGTH, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import textareaStyles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
@@ -41,10 +41,18 @@ import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js
  */
 let TextArea = TextArea_1 = class TextArea extends UI5Element {
     get formValidityMessage() {
-        return TextArea_1.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+        if (this.formValidity.valueMissing) {
+            return TextArea_1.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+        }
+        if (this.formValidity.tooLong) {
+            return TextArea_1.i18nBundle.getText(TEXTAREA_EXCEEDS_MAXLENGTH, this.value.length - (this.maxlength ?? 0));
+        }
     }
     get formValidity() {
-        return { valueMissing: this.required && !this.value };
+        return {
+            valueMissing: this.required && !this.value,
+            tooLong: this.showExceededText && (this.value.length > (this.maxlength ?? 0)),
+        };
     }
     async formElementAnchor() {
         return this.getFocusDomRefAsync();

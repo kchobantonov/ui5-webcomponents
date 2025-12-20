@@ -164,9 +164,7 @@ class UI5Element extends HTMLElement {
         }
     }
     /**
-     * Returns a unique ID for this UI5 Element
-     *
-     * @deprecated - This property is not guaranteed in future releases
+     * Returns a unique ID for this UI5 Element.
      * @protected
      */
     get _id() {

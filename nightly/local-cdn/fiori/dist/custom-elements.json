@@ -2875,6 +2875,20 @@
                 "name": "SearchField",
                 "module": "dist/SearchField.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "scopeValue",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Defines the value of the component:\n\nApplications are responsible for setting the correct scope value.\n\n**Note:** If the given value does not match any existing scopes,\nno scope will be selected and the SearchField scope component will be displayed as empty.",
+              "privacy": "public",
+              "default": "\"\"",
+              "inheritedFrom": {
+                "name": "SearchField",
+                "module": "dist/SearchField.js"
+              }
             }
           ],
           "events": [
@@ -3018,6 +3032,19 @@
               "name": "accessible-description",
               "default": "undefined",
               "fieldName": "accessibleDescription",
+              "type": {
+                "text": "string | undefined"
+              },
+              "inheritedFrom": {
+                "name": "SearchField",
+                "module": "dist/SearchField.js"
+              }
+            },
+            {
+              "description": "Defines the value of the component:\n\nApplications are responsible for setting the correct scope value.\n\n**Note:** If the given value does not match any existing scopes,\nno scope will be selected and the SearchField scope component will be displayed as empty.",
+              "name": "scope-value",
+              "default": "\"\"",
+              "fieldName": "scopeValue",
               "type": {
                 "text": "string | undefined"
               },
@@ -3472,12 +3499,12 @@
             },
             {
               "kind": "field",
-              "name": "selected",
+              "name": "value",
               "type": {
-                "text": "boolean"
+                "text": "string | undefined"
               },
-              "description": "Indicates whether the item is selected",
-              "default": "false",
+              "description": "Defines the value of the `ui5-search-scope`.\nUsed for selection in Search scopes.",
+              "default": "undefined",
               "privacy": "public"
             }
           ],
@@ -3492,12 +3519,12 @@
               }
             },
             {
-              "description": "Indicates whether the item is selected",
-              "name": "selected",
-              "default": "false",
-              "fieldName": "selected",
+              "description": "Defines the value of the `ui5-search-scope`.\nUsed for selection in Search scopes.",
+              "name": "value",
+              "default": "undefined",
+              "fieldName": "value",
               "type": {
-                "text": "boolean"
+                "text": "string | undefined"
               }
             }
           ],
@@ -4427,6 +4454,20 @@
                 "name": "SearchField",
                 "module": "dist/SearchField.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "scopeValue",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Defines the value of the component:\n\nApplications are responsible for setting the correct scope value.\n\n**Note:** If the given value does not match any existing scopes,\nno scope will be selected and the SearchField scope component will be displayed as empty.",
+              "privacy": "public",
+              "default": "\"\"",
+              "inheritedFrom": {
+                "name": "SearchField",
+                "module": "dist/SearchField.js"
+              }
             }
           ],
           "attributes": [
@@ -4535,6 +4576,19 @@
               "name": "accessible-description",
               "default": "undefined",
               "fieldName": "accessibleDescription",
+              "type": {
+                "text": "string | undefined"
+              },
+              "inheritedFrom": {
+                "name": "SearchField",
+                "module": "dist/SearchField.js"
+              }
+            },
+            {
+              "description": "Defines the value of the component:\n\nApplications are responsible for setting the correct scope value.\n\n**Note:** If the given value does not match any existing scopes,\nno scope will be selected and the SearchField scope component will be displayed as empty.",
+              "name": "scope-value",
+              "default": "\"\"",
+              "fieldName": "scopeValue",
               "type": {
                 "text": "string | undefined"
               },
@@ -7701,6 +7755,315 @@
           "declaration": {
             "name": "UserSettingsAccountView",
             "module": "dist/UserSettingsAccountView.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/UserSettingsAppearanceView.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "### Overview\n\nThe `ui5-user-settings-appearance-view` represents a view displayed in the `ui5-user-settings-item`.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsAppearanceView.js\";`",
+          "name": "UserSettingsAppearanceView",
+          "slots": [
+            {
+              "name": "default",
+              "description": "Defines the items of the component.",
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            },
+            {
+              "name": "additionalContent",
+              "description": "Defines additional content displayed below the items list."
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Defines the title text of the user settings view.",
+              "privacy": "public",
+              "default": "undefined",
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Defines whether the view is selected. There can be just one selected view at a time.",
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "secondary",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`\nand controls the visibility of the back button.",
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "selection-change",
+              "type": {
+                "text": "CustomEvent<UserSettingsAppearanceViewItemSelectEventDetail>",
+                "references": [
+                  {
+                    "name": "UserSettingsAppearanceViewItemSelectEventDetail",
+                    "package": "@ui5/webcomponents-fiori",
+                    "module": "dist/UserSettingsAppearanceView.js"
+                  }
+                ]
+              },
+              "description": "Fired when an item is selected."
+            }
+          ],
+          "superclass": {
+            "name": "UserSettingsView",
+            "package": "@ui5/webcomponents-fiori",
+            "module": "dist/UserSettingsView.js"
+          },
+          "tagName": "ui5-user-settings-appearance-view",
+          "customElement": true,
+          "attributes": [
+            {
+              "description": "Defines the title text of the user settings view.",
+              "name": "text",
+              "default": "undefined",
+              "fieldName": "text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            },
+            {
+              "description": "Defines whether the view is selected. There can be just one selected view at a time.",
+              "name": "selected",
+              "default": "false",
+              "fieldName": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            },
+            {
+              "description": "Indicates whether the view is secondary. It is relevant only if the view is used in `pages` slot of `ui5-user-settings-item`\nand controls the visibility of the back button.",
+              "name": "secondary",
+              "default": "false",
+              "fieldName": "secondary",
+              "type": {
+                "text": "boolean"
+              },
+              "inheritedFrom": {
+                "name": "UserSettingsView",
+                "module": "dist/UserSettingsView.js"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "UserSettingsAppearanceView",
+            "module": "dist/UserSettingsAppearanceView.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "ui5-user-settings-appearance-view",
+          "declaration": {
+            "name": "UserSettingsAppearanceView",
+            "module": "dist/UserSettingsAppearanceView.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/UserSettingsAppearanceViewGroup.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "### Overview\n\nThe `ui5-user-settings-appearance-view-group` is a special list item group used to group appearance view items.\n\nThis is the item to use inside a `ui5-user-settings-appearance-view`.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsAppearanceViewGroup.js\";`",
+          "name": "UserSettingsAppearanceViewGroup",
+          "slots": [
+            {
+              "name": "default",
+              "description": "Defines the items of the <code>ui5-user-settings-appearance-view-group</code>."
+            }
+          ],
+          "superclass": {
+            "name": "ListItemGroup",
+            "package": "@ui5/webcomponents",
+            "module": "dist/ListItemGroup.js"
+          },
+          "tagName": "ui5-user-settings-appearance-view-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "UserSettingsAppearanceViewGroup",
+            "module": "dist/UserSettingsAppearanceViewGroup.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "ui5-user-settings-appearance-view-group",
+          "declaration": {
+            "name": "UserSettingsAppearanceViewGroup",
+            "module": "dist/UserSettingsAppearanceViewGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/UserSettingsAppearanceViewItem.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "### Overview\n\nThe `ui5-user-settings-appearance-view-item` represents a theme/appearance option item\nwithin the `ui5-user-settings-appearance-view`.\n\nIt displays a theme with an avatar icon, text label, and can be selected.\n\n### ES6 Module Import\n`import \"@ui5/webcomponents-fiori/dist/UserSettingsAppearanceViewItem.js\";`",
+          "name": "UserSettingsAppearanceViewItem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "itemKey",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "Defines the unique identifier of the item.",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "Defines the text label displayed for the appearance item.",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"product\"",
+              "description": "Defines the icon of the appearance item.",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "colorScheme",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"Accent7\"",
+              "description": "Defines the color scheme of the avatar.",
+              "privacy": "public"
+            }
+          ],
+          "attributes": [
+            {
+              "description": "Defines the unique identifier of the item.",
+              "name": "item-key",
+              "default": "\"\"",
+              "fieldName": "itemKey",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "description": "Defines the text label displayed for the appearance item.",
+              "name": "text",
+              "default": "\"\"",
+              "fieldName": "text",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "description": "Defines the icon of the appearance item.",
+              "name": "icon",
+              "default": "\"product\"",
+              "fieldName": "icon",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "description": "Defines the color scheme of the avatar.",
+              "name": "color-scheme",
+              "default": "\"Accent7\"",
+              "fieldName": "colorScheme",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "ListItemCustom",
+            "package": "@ui5/webcomponents",
+            "module": "dist/ListItemCustom.js"
+          },
+          "tagName": "ui5-user-settings-appearance-view-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "UserSettingsAppearanceViewItem",
+            "module": "dist/UserSettingsAppearanceViewItem.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "ui5-user-settings-appearance-view-item",
+          "declaration": {
+            "name": "UserSettingsAppearanceViewItem",
+            "module": "dist/UserSettingsAppearanceViewItem.js"
           }
         }
       ]

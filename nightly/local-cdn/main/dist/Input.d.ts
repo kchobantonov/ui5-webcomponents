@@ -379,7 +379,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
      * @since 2.11.0
      */
     _handleLinkNavigation: boolean;
-    get formValidityMessage(): string;
+    get formValidityMessage(): string | undefined;
     get _effectiveShowSuggestions(): boolean;
     get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;

@@ -1997,7 +1997,7 @@
     },
     {
       "name": "ui5-link",
-      "description": "### Overview\nThe `ui5-link` is a hyperlink component that is used to navigate to other\napps and web pages, or to trigger actions.\nIt is a clickable text element, visualized in such a way that it stands out\nfrom the standard text.\nOn hover, it changes its style to an underlined text to provide additional feedback to the user.\n\n### Usage\n\nYou can set the `ui5-link` to be enabled or disabled.\n\nTo create a visual hierarchy in large lists of links, you can set the less important links as\n`Subtle` or the more important ones as `Emphasized`,\nby using the `design` property.\n\nIf the `href` property is set, the link behaves as the HTML\nanchor tag (`<a></a>`) and opens the specified URL in the given target frame (`target` property).\nTo specify where the linked content is opened, you can use the `target` property.\n\n### Responsive behavior\n\nIf there is not enough space, the text of the `ui5-link` becomes truncated.\nIf the `wrappingType` property is set to `\"Normal\"`, the text is displayed\non several lines instead of being truncated.\n\n### ES6 Module Import\n\n`import \"@ui5/webcomponents/dist/Link\";`\n\n\n---\n\n\n\n\n### **Events:**\n - **click** - Fired when the component is triggered either with a mouse/tap\nor by using the Enter key.\n\n### **Slots:**\n - **default** - Defines the text of the component.\n\n**Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.\n\n### **CSS Parts:**\n - **icon** - Used to style the provided icon within the link\n- **endIcon** - Used to style the provided endIcon within the link",
+      "description": "### Overview\nThe `ui5-link` is a hyperlink component that is used to navigate to other\napps and web pages, or to trigger actions.\nIt is a clickable text element, visualized in such a way that it stands out\nfrom the standard text.\nOn hover, it changes its style to an underlined text to provide additional feedback to the user.\n\n### Usage\n\nYou can set the `ui5-link` to be enabled or disabled.\n\nTo create a visual hierarchy in large lists of links, you can set the less important links as\n`Subtle` or the more important ones as `Emphasized`,\nby using the `design` property.\n\nIf the `href` property is set, the link behaves as the HTML\nanchor tag (`<a></a>`) and opens the specified URL in the given target frame (`target` property).\nTo specify where the linked content is opened, you can use the `target` property.\n\n### Responsive behavior\n\nIf there is not enough space, the text of the `ui5-link` becomes truncated.\nIf the `wrappingType` property is set to `\"Normal\"`, the text is displayed\non several lines instead of being truncated.\n\n### ES6 Module Import\n\n`import \"@ui5/webcomponents/dist/Link\";`\n\n\n---\n\n\n\n\n### **Events:**\n - **click** - Fired when the component is triggered either with a mouse/tap\nor by using the Enter key.\n\n### **Slots:**\n - **default** - Defines the text of the component.\n\n**Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.\n- **default** - Defines the text of the component.\n\n**Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.\n\n### **CSS Parts:**\n - **icon** - Used to style the provided icon within the link\n- **endIcon** - Used to style the provided endIcon within the link",
       "attributes": [
         {
           "name": "disabled",
@@ -3259,12 +3259,12 @@
         {
           "name": "start-value",
           "description": "Defines start point of a selection - position of a first handle on the slider.",
-          "values": []
+          "values": [{ "name": "any" }]
         },
         {
           "name": "end-value",
           "description": "Defines end point of a selection - position of a second handle on the slider.",
-          "values": []
+          "values": [{ "name": "any" }]
         },
         {
           "name": "min",
@@ -5165,7 +5165,7 @@
         {
           "name": "selected",
           "description": "Defines the selected state of the component.",
-          "values": []
+          "values": [{ "name": "any" }]
         }
       ],
       "references": []

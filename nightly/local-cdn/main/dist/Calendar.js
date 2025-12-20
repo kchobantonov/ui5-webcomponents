@@ -409,6 +409,13 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
     }
     /**
+     * Returns the focusable element inside the Calendar (the current picker)
+     * @override
+     */
+    getFocusDomRef() {
+        return this._currentPickerDOM;
+    }
+    /**
      * The year clicked the "Previous" button in the header
      */
     onHeaderPreviousPress() {

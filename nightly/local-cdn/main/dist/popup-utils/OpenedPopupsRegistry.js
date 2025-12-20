@@ -48,7 +48,7 @@ const _keydownListener = (event) => {
         if (openUI5Support && topmostPopup !== openUI5Support.getTopmostPopup()) {
             return;
         }
-        event.stopPropagation();
+        event.stopImmediatePropagation();
         topmostPopup.closePopup(true);
     }
 };

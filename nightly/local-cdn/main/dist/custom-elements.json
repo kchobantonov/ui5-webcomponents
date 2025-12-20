@@ -9812,6 +9812,10 @@
             {
               "description": "Defines the text of the component.\n\n**Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.",
               "name": "default"
+            },
+            {
+              "name": "default",
+              "description": "Defines the text of the component.\n\n**Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design."
             }
           ],
           "members": [
@@ -16070,21 +16074,15 @@
             {
               "kind": "field",
               "name": "startValue",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
               "description": "Defines start point of a selection - position of a first handle on the slider.",
+              "default": "0",
               "privacy": "public"
             },
             {
               "kind": "field",
               "name": "endValue",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
               "description": "Defines end point of a selection - position of a second handle on the slider.",
+              "default": "100",
               "privacy": "public"
             },
             {
@@ -16235,7 +16233,7 @@
               "default": "undefined",
               "fieldName": "startValue",
               "type": {
-                "text": "number"
+                "text": "any"
               }
             },
             {
@@ -16244,7 +16242,7 @@
               "default": "undefined",
               "fieldName": "endValue",
               "type": {
-                "text": "number"
+                "text": "any"
               }
             },
             {
@@ -25722,12 +25720,12 @@
             {
               "kind": "field",
               "name": "selected",
+              "description": "Defines the selected state of the component.",
+              "default": "false",
+              "privacy": "public",
               "type": {
                 "text": "boolean"
-              },
-              "default": "false",
-              "description": "Defines the selected state of the component.",
-              "privacy": "public"
+              }
             }
           ],
           "attributes": [
@@ -25737,7 +25735,7 @@
               "default": "false",
               "fieldName": "selected",
               "type": {
-                "text": "boolean"
+                "text": "any"
               }
             }
           ],

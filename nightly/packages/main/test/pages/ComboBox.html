@@ -18,8 +18,8 @@
 
 
 
-  <script type="module" crossorigin src="/webcomponents/nightly/assets/test/pages/ComboBox.html-o3CRjS0H.js"></script>
-  <link rel="modulepreload" crossorigin href="/webcomponents/nightly/assets/bundle.esm-Tdnr1ODP.js">
+  <script type="module" crossorigin src="/webcomponents/nightly/assets/test/pages/ComboBox.html-DzQ8H0aD.js"></script>
+  <link rel="modulepreload" crossorigin href="/webcomponents/nightly/assets/bundle.esm-lYQg9wGC.js">
   <link rel="stylesheet" crossorigin href="/webcomponents/nightly/assets/ComboBox-LkZexEaJ.css">
 </head>
 
@@ -412,6 +412,48 @@
 
 				inputCountEl.innerText = parseInt(inputCountEl.innerText) + 1;
 			});
+		</script>
+	</div>
+	<div class="demo-section">
+		<ui5-title>Form validation</ui5-title>
+		<form id="formValidation">
+			<ui5-message-strip id="formValidationMessage" hidden></ui5-message-strip>
+			<ui5-combobox id="comboInAForm" class="combobox2auto" required>
+				<ui5-cb-item text="Algeria"></ui5-cb-item>
+				<ui5-cb-item text="Argentina"></ui5-cb-item>
+				<ui5-cb-item text="Bulgaria"></ui5-cb-item>
+				<ui5-cb-item text="Canada"></ui5-cb-item>
+				<ui5-cb-item text="Chile"></ui5-cb-item>
+			</ui5-combobox>
+			<br><br>
+			<ui5-button id="btnCheckFormValidity">Check Validity</ui5-button>
+		</form>
+		<script>
+			const btnCheckFormValidity = document.getElementById('btnCheckFormValidity');
+			const formValidationMessage = document.getElementById('formValidationMessage');
+			const comboInAForm = document.getElementById('comboInAForm');
+
+			btnCheckFormValidity.addEventListener('click', function () {
+				checkFormValidity('comboInAForm');
+			});
+
+			comboInAForm.addEventListener('ui5-change', function () {
+				setTimeout(() => {
+					checkFormValidity('comboInAForm', true);
+				}, 0);
+			});
+
+			function checkFormValidity(elementId, delayed = false) {
+				const element = document.getElementById(elementId);
+				const isValid = element.checkValidity();
+
+				element.reportValidity();
+
+				// Show result
+				formValidationMessage.hidden = false;
+				formValidationMessage.innerText = `checkValidity(): ${isValid} ${delayed ? '( Delayed check )' : ''}`;
+				formValidationMessage.design = isValid ? "Positive" : "Negative";
+			}
 		</script>
 	</div>
 	<div class="demo-section">

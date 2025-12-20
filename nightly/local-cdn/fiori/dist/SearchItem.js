@@ -14,7 +14,7 @@ import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import { SEARCH_ITEM_DELETE_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import { SEARCH_ITEM_DELETE_BUTTON_TOOLTIP, } from "./generated/i18n/i18n-defaults.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
@@ -156,7 +156,7 @@ let SearchItem = SearchItem_1 = class SearchItem extends ListItemBase {
         this._markupText = this.highlightText ? generateHighlightedMarkup((this.text || ""), this.highlightText) : encodeXML(this.text || "");
     }
     get _deleteButtonTooltip() {
-        return SearchItem_1.i18nBundle.getText(SEARCH_ITEM_DELETE_BUTTON);
+        return SearchItem_1.i18nBundle.getText(SEARCH_ITEM_DELETE_BUTTON_TOOLTIP);
     }
     get hasActions() {
         return !!this.actions.length;

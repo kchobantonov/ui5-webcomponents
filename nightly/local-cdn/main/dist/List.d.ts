@@ -9,6 +9,7 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type ListItemBase from "./ListItemBase.js";
+import type ListItem from "./ListItem.js";
 import type { ListItemBasePressEventDetail } from "./ListItemBase.js";
 import type DropIndicator from "./DropIndicator.js";
 import type { SelectionRequestEventDetail } from "./ListItem.js";
@@ -294,6 +295,7 @@ declare class List extends UI5Element {
     _beforeElement?: HTMLElement | null;
     _afterElement?: HTMLElement | null;
     _startMarkerOutOfView: boolean;
+    _lastFocusedElementIndex?: number;
     handleResizeCallback: ResizeObserverCallback;
     onItemFocusedBound: (e: CustomEvent) => void;
     onForwardAfterBound: (e: CustomEvent) => void;
@@ -364,6 +366,8 @@ declare class List extends UI5Element {
     getItemsForProcessing(): Array<ListItemBase>;
     _revertSelection(previouslySelectedItems: Array<ListItemBase>): void;
     _onkeydown(e: KeyboardEvent): void;
+    _handleF7(e: KeyboardEvent): void;
+    _getClosestListItem(element: HTMLElement): ListItem | null;
     _moveItem(item: ListItemBase, e: KeyboardEvent): void;
     _onLoadMoreKeydown(e: KeyboardEvent): void;
     _onLoadMoreKeyup(e: KeyboardEvent): void;
@@ -377,7 +381,8 @@ declare class List extends UI5Element {
     _handleTabNext(e: KeyboardEvent): void;
     _handleHome(): void;
     _handleEnd(): void;
-    _handleDown(): void;
+    _handleDown(e: KeyboardEvent): void;
+    _navigateToAdjacentItem(listItem: ListItem, offset: -1 | 1): boolean;
     _onfocusin(e: FocusEvent): void;
     _ondragenter(e: DragEvent): void;
     _ondragleave(e: DragEvent): void;
@@ -395,7 +400,7 @@ declare class List extends UI5Element {
     focusBeforeElement(): void;
     focusAfterElement(): void;
     focusGrowingButton(): void;
-    _shouldFocusGrowingButton(): void;
+    _shouldFocusGrowingButton(): boolean;
     getGrowingButton(): HTMLElement;
     /**
      * Focuses the first list item and sets its tabindex to "0" via the ItemNavigation

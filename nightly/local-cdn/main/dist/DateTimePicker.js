@@ -246,6 +246,13 @@ let DateTimePicker = DateTimePicker_1 = class DateTimePicker extends DatePicker 
         return false;
     }
     /**
+     * Returns the ID of the element to focus initially when the picker opens in phone mode
+     * @private
+     */
+    get _initialFocusId() {
+        return this._phoneMode ? `${this._id}-calendar` : undefined;
+    }
+    /**
      * EVENT HANDLERS
      */
     /**

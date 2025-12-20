@@ -8,11 +8,17 @@ const addOpenedPopup = (popupInfo) => {
 };
 const removeOpenedPopup = (popup) => {
     const index = AllOpenedPopupsRegistry.openedRegistry.findIndex(el => el.instance === popup);
+    if (index === AllOpenedPopupsRegistry.openedRegistry.length - 1) {
+        fixTopmostOpenUI5Popup();
+    }
     if (index > -1) {
         AllOpenedPopupsRegistry.openedRegistry.splice(index, 1);
     }
 };
 const getTopmostPopup = () => {
+    if (AllOpenedPopupsRegistry.openedRegistry.length === 0) {
+        return null;
+    }
     return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1].instance;
 };
 /**
@@ -33,15 +39,67 @@ const hasWebComponentPopupAbove = (popup) => {
     }
     return false;
 };
-const openNativePopover = (domRef) => {
+const getPopupContentElement = (popup) => {
+    const content = popup.getContent();
+    return content instanceof HTMLElement ? content : content?.getDomRef() || null;
+};
+const openNativePopoverForOpenUI5 = (popup) => {
+    const openingInitiated = ["OPENING", "OPEN"].includes(popup.getOpenState());
+    if (!openingInitiated || !isNativePopoverOpen()) {
+        return;
+    }
+    const domRef = getPopupContentElement(popup);
+    if (!domRef) {
+        return;
+    }
+    const openUI5BlockLayer = document.getElementById("sap-ui-blocklayer-popup");
+    if (popup.getModal() && openUI5BlockLayer) {
+        openUI5BlockLayer.setAttribute("popover", "manual");
+        openUI5BlockLayer.hidePopover();
+        openUI5BlockLayer.showPopover();
+    }
     domRef.setAttribute("popover", "manual");
     domRef.showPopover();
 };
-const closeNativePopover = (domRef) => {
+const closeNativePopoverForOpenUI5 = (popup) => {
+    const domRef = getPopupContentElement(popup);
+    if (!domRef) {
+        return;
+    }
     if (domRef.hasAttribute("popover")) {
         domRef.hidePopover();
         domRef.removeAttribute("popover");
     }
+    if (getTopmostPopup() !== popup) {
+        return;
+    }
+    // The OpenUI5 block layer is only one for all modal OpenUI5 popups,
+    // and it is displayed above all opened pupups - OpenUI5 and Web Components,
+    // as a result, we need to hide this block layer.
+    // If the underlying popup is a Web Component - it is displayed like a native popover, and we don't need to do anything
+    // If the underlying popup is an OpenUI5 popup, it will be fixed in fixTopmostOpenUI5Popup method.
+    if (popup.getModal()) {
+        const openUI5BlockLayer = document.getElementById("sap-ui-blocklayer-popup");
+        if (openUI5BlockLayer && openUI5BlockLayer.hasAttribute("popover")) {
+            openUI5BlockLayer.hidePopover();
+        }
+    }
+};
+const fixTopmostOpenUI5Popup = () => {
+    if (!isNativePopoverOpen()) {
+        return;
+    }
+    const prevPopup = AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 2];
+    if (!prevPopup
+        || prevPopup.type !== "OpenUI5"
+        || !prevPopup.instance.getModal()) {
+        return;
+    }
+    const content = getPopupContentElement(prevPopup.instance);
+    const openUI5BlockLayer = document.getElementById("sap-ui-blocklayer-popup");
+    content?.hidePopover();
+    openUI5BlockLayer?.showPopover();
+    content?.showPopover();
 };
 const isNativePopoverOpen = (root = document) => {
     if (root.querySelector(":popover-open")) {
@@ -52,9 +110,9 @@ const isNativePopoverOpen = (root = document) => {
         return shadowRoot && isNativePopoverOpen(shadowRoot);
     });
 };
-const patchPopupBasedControl = (PopupBasedControl) => {
-    const origOnsapescape = PopupBasedControl.prototype.onsapescape;
-    PopupBasedControl.prototype.onsapescape = function onsapescape(...args) {
+const patchDialog = (Dialog) => {
+    const origOnsapescape = Dialog.prototype.onsapescape;
+    Dialog.prototype.onsapescape = function onsapescape(...args) {
         if (hasWebComponentPopupAbove(this.oPopup)) {
             return;
         }
@@ -65,17 +123,7 @@ const patchOpen = (Popup) => {
     const origOpen = Popup.prototype.open;
     Popup.prototype.open = function open(...args) {
         origOpen.apply(this, args); // call open first to initiate opening
-        const topLayerAlreadyInUse = isNativePopoverOpen();
-        const openingInitiated = ["OPENING", "OPEN"].includes(this.getOpenState());
-        if (openingInitiated && topLayerAlreadyInUse) {
-            const element = this.getContent();
-            if (element) {
-                const domRef = element instanceof HTMLElement ? element : element?.getDomRef();
-                if (domRef) {
-                    openNativePopover(domRef);
-                }
-            }
-        }
+        openNativePopoverForOpenUI5(this);
         addOpenedPopup({
             type: "OpenUI5",
             instance: this,
@@ -85,12 +133,8 @@ const patchOpen = (Popup) => {
 const patchClosed = (Popup) => {
     const _origClosed = Popup.prototype._closed;
     Popup.prototype._closed = function _closed(...args) {
-        const element = this.getContent();
-        const domRef = element instanceof HTMLElement ? element : element?.getDomRef();
+        closeNativePopoverForOpenUI5(this);
         _origClosed.apply(this, args); // only then call _close
-        if (domRef) {
-            closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
-        }
         removeOpenedPopup(this);
     };
 };
@@ -113,7 +157,7 @@ const patchPopup = (Popup, Dialog) => {
     patchClosed(Popup); // Popup.prototype._closed
     createGlobalStyles(); // Ensures correct popover positioning by OpenUI5 (otherwise 0,0 is the center of the screen)
     patchFocusEvent(Popup); // Popup.prototype.onFocusEvent
-    patchPopupBasedControl(Dialog); // Dialog.prototype.onsapescape
+    patchDialog(Dialog); // Dialog.prototype.onsapescape
 };
 export { patchPopup, addOpenedPopup, removeOpenedPopup, getTopmostPopup, };
 //# sourceMappingURL=patchPopup.js.map

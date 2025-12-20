@@ -210,7 +210,7 @@ declare class TextArea extends UI5Element implements IFormInputElement {
     previousValue: string;
     valueStatePopover?: Popover;
     static i18nBundle: I18nBundle;
-    get formValidityMessage(): string;
+    get formValidityMessage(): string | undefined;
     get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;
     get formFormattedValue(): FormData | string | null;
