@@ -281,6 +281,9 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         else {
             this._dialogInputValueState = this.valueState;
         }
+        if (this.filterSelected) {
+            this.filterSelected = false;
+        }
         this.value = value;
         this._shouldFilterItems = true;
         this.valueBeforeAutoComplete = value;

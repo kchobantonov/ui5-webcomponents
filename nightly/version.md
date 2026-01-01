@@ -1,5 +1,7 @@
-commit 988e821178b9ff6c47c2faeae3ef1d5a56f46280
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Thu Dec 18 08:06:29 2025 +0000
+commit b62c313d4ba1f2baa1feb048066eb90c5c4f7571
+Author: Aleksandar Terziev <aleksandar.terziev@sap.com>
+Date:   Tue Dec 30 13:09:57 2025 +0200
 
-    chore(release): publish v2.18.0-rc.1 [ci skip]
+    fix(ui5-multi-combo-box): unskip test (#12829)
+    
+    fix(ui5-multi-combo-box): fix failing test

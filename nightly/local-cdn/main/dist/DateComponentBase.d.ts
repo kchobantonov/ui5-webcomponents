@@ -96,6 +96,7 @@ declare class DateComponentBase extends UI5Element {
     get _isPattern(): boolean;
     get _isValueFormatPattern(): boolean;
     get _isDisplayFormatPattern(): boolean;
+    get initialFocusId(): string;
     get hasSecondaryCalendarType(): boolean;
     _getMinMaxCalendarDateFromString(date: string): CalendarDate | undefined;
     _getCalendarDateFromString(value: string): CalendarDate | undefined;

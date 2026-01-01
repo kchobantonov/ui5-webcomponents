@@ -92,6 +92,9 @@ let DateComponentBase = class DateComponentBase extends UI5Element {
     get _isDisplayFormatPattern() {
         return this._displayFormat !== "medium" && this._displayFormat !== "short" && this._displayFormat !== "long";
     }
+    get initialFocusId() {
+        return `${this._id}-calendar`;
+    }
     get hasSecondaryCalendarType() {
         return !!this.secondaryCalendarType && this.secondaryCalendarType !== this.primaryCalendarType;
     }

@@ -19,9 +19,9 @@ declare class OpenUI5Support {
         animationMode: string;
         language: string;
         theme: string;
-        themeRoot: string;
+        themeRoot: string | undefined;
         rtl: string;
-        timezone: string;
+        timezone: string | undefined;
         calendarType: string;
         formatSettings: {
             firstDayOfWeek: number | undefined;

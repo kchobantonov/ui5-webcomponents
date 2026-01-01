@@ -35,7 +35,7 @@ import CalendarTemplate from "./CalendarTemplate.js";
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
 import CalendarHeaderCss from "./generated/themes/CalendarHeader.css.js";
-import { CALENDAR_HEADER_MONTH_BUTTON, CALENDAR_HEADER_MONTH_BUTTON_SHORTCUT, CALENDAR_HEADER_YEAR_BUTTON, CALENDAR_HEADER_YEAR_BUTTON_SHORTCUT, CALENDAR_HEADER_YEAR_RANGE_BUTTON, CALENDAR_HEADER_YEAR_RANGE_BUTTON_SHORTCUT, } from "./generated/i18n/i18n-defaults.js";
+import { CALENDAR_HEADER_MONTH_BUTTON, CALENDAR_HEADER_MONTH_BUTTON_SHORTCUT, CALENDAR_HEADER_YEAR_BUTTON, CALENDAR_HEADER_YEAR_BUTTON_SHORTCUT, CALENDAR_HEADER_YEAR_RANGE_BUTTON, CALENDAR_HEADER_YEAR_RANGE_BUTTON_SHORTCUT, CALENDAR_HEADER_MONTH_NEXT_BUTTON_TITLE, CALENDAR_HEADER_MONTH_NEXT_BUTTON_SHORTCUT, CALENDAR_HEADER_MONTH_PREVIOUS_BUTTON_TITLE, CALENDAR_HEADER_MONTH_PREVIOUS_BUTTON_SHORTCUT, CALENDAR_HEADER_YEAR_NEXT_BUTTON_TITLE, CALENDAR_HEADER_YEAR_PREVIOUS_BUTTON_TITLE, CALENDAR_HEADER_YEAR_RANGE_NEXT_BUTTON_TITLE, CALENDAR_HEADER_YEAR_RANGE_PREVIOUS_BUTTON_TITLE, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -598,22 +598,40 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         const monthLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_MONTH_BUTTON, headerMonthButtonText);
         const yearLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_BUTTON, this._headerYearButtonText);
         const yearRangeLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_RANGE_BUTTON, rangeStartText, rangeEndText);
+        let nextBtnLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_MONTH_NEXT_BUTTON_TITLE);
+        let prevBtnLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_MONTH_PREVIOUS_BUTTON_TITLE);
+        if (this._currentPicker === "month") {
+            nextBtnLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_NEXT_BUTTON_TITLE);
+            prevBtnLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_PREVIOUS_BUTTON_TITLE);
+        }
+        else if (this._currentPicker === "year" || this._currentPicker === "yearrange") {
+            nextBtnLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_RANGE_NEXT_BUTTON_TITLE);
+            prevBtnLabel = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_RANGE_PREVIOUS_BUTTON_TITLE);
+        }
         // Get shortcuts
         const monthShortcut = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_MONTH_BUTTON_SHORTCUT);
         const yearShortcut = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_BUTTON_SHORTCUT);
         const yearRangeShortcut = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_YEAR_RANGE_BUTTON_SHORTCUT);
+        const nextBtnShortcut = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_MONTH_NEXT_BUTTON_SHORTCUT);
+        const prevBtnShortcut = Calendar_1.i18nBundle?.getText(CALENDAR_HEADER_MONTH_PREVIOUS_BUTTON_SHORTCUT);
         return {
             ariaLabelMonthButton: monthLabel,
             ariaLabelYearButton: yearLabel,
             ariaLabelYearRangeButton: yearRangeLabel,
+            ariaLabelNextButton: nextBtnLabel,
+            ariaLabelPrevButton: prevBtnLabel,
             // Keyboard shortcuts for aria-keyshortcuts
             keyShortcutMonthButton: monthShortcut,
             keyShortcutYearButton: yearShortcut,
             keyShortcutYearRangeButton: yearRangeShortcut,
+            keyShortcutNextButton: nextBtnShortcut,
+            keyShortcutPrevButton: prevBtnShortcut,
             // Tooltips combining label and shortcut
             tooltipMonthButton: `${monthLabel} (${monthShortcut})`,
             tooltipYearButton: `${yearLabel} (${yearShortcut})`,
             tooltipYearRangeButton: `${yearRangeLabel} (${yearRangeShortcut})`,
+            tooltipNextButton: `${nextBtnLabel} (${nextBtnShortcut})`,
+            tooltipPrevButton: `${prevBtnLabel} (${prevBtnShortcut})`,
         };
     }
     /**
@@ -688,21 +706,22 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
             this.fireDecoratorEvent("show-year-range-view");
         }
     }
-    onPrevButtonClick(e) {
-        if (this._previousButtonDisabled) {
+    _handleNavigationButtonKeyDown(e, isDisabled, action) {
+        if (isDisabled) {
             e.preventDefault();
             return;
         }
-        this.onHeaderPreviousPress();
+        if (e.button !== 0) {
+            return;
+        }
+        action();
         e.preventDefault();
     }
+    onPrevButtonClick(e) {
+        this._handleNavigationButtonKeyDown(e, this._previousButtonDisabled, () => this.onHeaderPreviousPress());
+    }
     onNextButtonClick(e) {
-        if (this._nextButtonDisabled) {
-            e.preventDefault();
-            return;
-        }
-        this.onHeaderNextPress();
-        e.preventDefault();
+        this._handleNavigationButtonKeyDown(e, this._nextButtonDisabled, () => this.onHeaderNextPress());
     }
     /**
      * Returns an array of UTC timestamps, representing the selected dates.

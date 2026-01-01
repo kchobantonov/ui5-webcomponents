@@ -345,12 +345,18 @@ declare class Calendar extends CalendarPart {
         ariaLabelMonthButton: string;
         ariaLabelYearButton: string;
         ariaLabelYearRangeButton: string;
+        ariaLabelNextButton: string;
+        ariaLabelPrevButton: string;
         keyShortcutMonthButton: string;
         keyShortcutYearButton: string;
         keyShortcutYearRangeButton: string;
+        keyShortcutNextButton: string;
+        keyShortcutPrevButton: string;
         tooltipMonthButton: string;
         tooltipYearButton: string;
         tooltipYearRangeButton: string;
+        tooltipNextButton: string;
+        tooltipPrevButton: string;
     };
     /**
      * Helper method to create CalendarDateComponent instances for year range
@@ -375,6 +381,7 @@ declare class Calendar extends CalendarPart {
     onYearButtonKeyUp(e: KeyboardEvent): void;
     onYearRangeButtonKeyDown(e: KeyboardEvent): void;
     onYearRangeButtonKeyUp(e: KeyboardEvent): void;
+    _handleNavigationButtonKeyDown(e: MouseEvent, isDisabled: boolean, action: () => void): void;
     onPrevButtonClick(e: MouseEvent): void;
     onNextButtonClick(e: MouseEvent): void;
     /**
