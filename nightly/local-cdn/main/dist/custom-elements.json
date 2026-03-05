@@ -28134,12 +28134,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/timepicker-utils/TimeSlider.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "dist/types/AvatarColorScheme.js",
       "declarations": [],
       "exports": [
@@ -29223,6 +29217,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/timepicker-utils/TimeSlider.js",
+      "declarations": [],
+      "exports": []
     }
   ]
 }
