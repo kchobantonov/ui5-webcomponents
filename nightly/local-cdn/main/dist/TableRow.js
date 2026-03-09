@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { customElement, slot, property } from "@ui5/webcomponents-base/dist/decorators.js";
+import { customElement, slotStrict as slot, property } from "@ui5/webcomponents-base/dist/decorators.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
@@ -67,13 +67,25 @@ let TableRow = class TableRow extends TableRowBase {
         HTMLElement.prototype.focus.call(this, focusOptions);
         return Promise.resolve();
     }
+    async _onpointerdown(e) {
+        if (e.button !== 0 || !this._isInteractive) {
+            return;
+        }
+        const composedPath = e.composedPath();
+        composedPath.splice(composedPath.indexOf(this));
+        await new Promise(resolve => setTimeout(resolve)); // wait for the focus to be set
+        const activeElement = getActiveElement();
+        if (!composedPath.includes(activeElement)) {
+            this._setActive("pointerup");
+        }
+    }
     _onkeydown(e, eventOrigin) {
         super._onkeydown(e, eventOrigin);
         if (e.defaultPrevented) {
             return;
         }
         if (eventOrigin === this && this._isInteractive && isEnter(e)) {
-            this.toggleAttribute("_active", true);
+            this._setActive("keyup");
             this._onclick();
         }
     }
@@ -87,11 +99,11 @@ let TableRow = class TableRow extends TableRowBase {
             }
         }
     }
-    _onkeyup() {
-        this.removeAttribute("_active");
-    }
-    _onfocusout() {
-        this.removeAttribute("_active");
+    _setActive(deactivationEvent) {
+        this.toggleAttribute("_active", true);
+        document.addEventListener(deactivationEvent, () => {
+            this.removeAttribute("_active");
+        }, { once: true });
     }
     _onOverflowButtonClick(e) {
         const ctor = this.actions[0].constructor;
@@ -103,7 +115,7 @@ let TableRow = class TableRow extends TableRowBase {
     }
     get _isNavigable() {
         return this._fixedActions.find(action => {
-            return action.hasAttribute("ui5-table-row-action-navigation") && !action._isInteractive;
+            return action.hasAttribute("ui5-table-row-action-navigation") && !action.invisible && !action._isInteractive;
         }) !== undefined;
     }
     get _rowIndex() {

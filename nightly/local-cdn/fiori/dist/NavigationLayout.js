@@ -7,14 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import { isPhone, isTablet, isCombi, } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import NavigationLayoutMode from "./types/NavigationLayoutMode.js";
+import { isInstanceOfSideNavigation } from "./SideNavigation.js";
 // Template
 import NavigationLayoutTemplate from "./NavigationLayoutTemplate.js";
 // Styles
 import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
+const SCREEN_WIDTH_BREAKPOINT = 600;
 /**
  * @class
  *
@@ -29,10 +31,10 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
  *
  * ### Responsive Behavior
  *
- * On desktop and tablet devices, the side navigation is visible
+ * On larger screens with a width of 600px or more, excluding mobile phone devices, the side navigation is visible
  * by default and can be expanded or collapsed using the `mode` property.
- * On phone devices, the side navigation is hidden by default and can
- * be displayed using the `mode` property.
+ * On mobile phone devices and screens with a width of 599px or less, the side navigation is hidden by
+ * default and can be displayed using the `mode` property.
  *
  * ### ES6 Module Import
  *
@@ -45,7 +47,6 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 let NavigationLayout = class NavigationLayout extends UI5Element {
     constructor() {
         super(...arguments);
-        this._defaultSideCollapsed = isPhone() || (isTablet() && !isCombi());
         /**
          * Specifies the navigation layout mode.
          * @default "Auto"
@@ -55,7 +56,7 @@ let NavigationLayout = class NavigationLayout extends UI5Element {
         /**
          * @private
          */
-        this.sideCollapsed = this._defaultSideCollapsed;
+        this.sideCollapsed = this._isSmallScreen();
         /**
          * @private
          */
@@ -64,10 +65,8 @@ let NavigationLayout = class NavigationLayout extends UI5Element {
          * @private
          */
         this.isPhone = isPhone();
-        /**
-         * @private
-         */
-        this.isTablet = isTablet() && !isCombi();
+        this._itemClickHandler = this._handleItemClick.bind(this);
+        this._sideNavigationItemClicked = false;
     }
     /**
      * Gets whether the side navigation is collapsed.
@@ -78,19 +77,58 @@ let NavigationLayout = class NavigationLayout extends UI5Element {
         return this.sideCollapsed;
     }
     onBeforeRendering() {
-        this.calcSideCollapsed();
-        if (isPhone()) {
-            return;
+        if (!this._sideNavigationItemClicked) {
+            this.calcSideCollapsed();
         }
         const sideNavigation = this.sideContent[0];
         this.hasSideNavigation = !!sideNavigation;
-        if (sideNavigation) {
+        if (sideNavigation && !this._sideNavigationItemClicked) {
             sideNavigation.collapsed = this.isSideCollapsed();
+        }
+    }
+    onAfterRendering() {
+        this._sideNavigationItemClicked = false;
+        this._detachSideNavigationListeners();
+        this._attachSideNavigationListeners();
+    }
+    onExitDOM() {
+        this._detachSideNavigationListeners();
+    }
+    _isSideNavigation(sideNavigation) {
+        return isInstanceOfSideNavigation(sideNavigation);
+    }
+    _attachSideNavigationListeners() {
+        const sideNavigation = this.sideContent[0];
+        if (this._isSideNavigation(sideNavigation)) {
+            sideNavigation.addEventListener("ui5-item-click", this._itemClickHandler);
+        }
+    }
+    _detachSideNavigationListeners() {
+        const sideNavigation = this.sideContent[0];
+        if (this._isSideNavigation(sideNavigation)) {
+            sideNavigation.removeEventListener("ui5-item-click", this._itemClickHandler);
+        }
+    }
+    _handleItemClick() {
+        if (this._isSmallScreen()) {
+            this._sideNavigationItemClicked = true;
+            this._collapseSideNavigation();
+        }
+    }
+    _isSmallScreen() {
+        return isPhone() || window.innerWidth < SCREEN_WIDTH_BREAKPOINT;
+    }
+    _collapseSideNavigation() {
+        const sideNavigation = this.sideContent[0];
+        if (this._isSideNavigation(sideNavigation)) {
+            sideNavigation.collapsed = true;
+            this.sideCollapsed = true;
+            this.mode = NavigationLayoutMode.Collapsed;
         }
     }
     calcSideCollapsed() {
         if (this.mode === NavigationLayoutMode.Auto) {
-            this.sideCollapsed = this._defaultSideCollapsed;
+            this.sideCollapsed = this._isSmallScreen();
         }
         else {
             this.sideCollapsed = this.mode === NavigationLayoutMode.Collapsed;
@@ -109,9 +147,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], NavigationLayout.prototype, "isPhone", void 0);
-__decorate([
-    property({ type: Boolean })
-], NavigationLayout.prototype, "isTablet", void 0);
 __decorate([
     slot()
 ], NavigationLayout.prototype, "header", void 0);

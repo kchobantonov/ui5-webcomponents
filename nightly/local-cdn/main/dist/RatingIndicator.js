@@ -106,6 +106,21 @@ let RatingIndicator = RatingIndicator_1 = class RatingIndicator extends UI5Eleme
         */
         this.required = false;
         /**
+         * Defines the icon to be displayed for the selected (filled) rating symbol.
+         *
+         * @default "favorite"
+         * @public
+         * @since 2.20
+         */
+        this.ratedIcon = "favorite";
+        /**
+         * Defines the icon to be displayed for the unselected (empty) rating symbol.
+         * @default "unfavorite"
+         * @public
+         * @since 2.20
+         */
+        this.unratedIcon = "unfavorite";
+        /**
          * @private
          */
         this._stars = [];
@@ -264,7 +279,13 @@ __decorate([
     property()
 ], RatingIndicator.prototype, "tooltip", void 0);
 __decorate([
-    property({ type: Array })
+    property()
+], RatingIndicator.prototype, "ratedIcon", void 0);
+__decorate([
+    property()
+], RatingIndicator.prototype, "unratedIcon", void 0);
+__decorate([
+    property({ type: Array, noAttribute: true })
 ], RatingIndicator.prototype, "_stars", void 0);
 __decorate([
     property({ type: Boolean })

@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { DefaultSlot } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import type ButtonState from "./ButtonState.js";
@@ -40,7 +41,8 @@ type AIButtonAccessibilityAttributes = {
  * @extends UI5Element
  * @since 2.0.0
  * @public
- * @experimental The Button and ButtonState web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
+ * @experimental The **@ui5/webcomponents-ai** package (including Button and ButtonState) is under active development and considered experimental. Component APIs are subject to change.
+ * Furthermore, the package supports **Horizon** themes only.
  */
 declare class Button extends UI5Element {
     eventDetails: {
@@ -121,7 +123,7 @@ declare class Button extends UI5Element {
      * you only use `ui5-ai-button-state` components in order to preserve the intended design.
      * @public
      */
-    states: Array<ButtonState>;
+    states: DefaultSlot<ButtonState>;
     _splitButton?: SplitButton;
     _hiddenSplitButton?: SplitButton;
     static i18nBundleAi: I18nBundle;

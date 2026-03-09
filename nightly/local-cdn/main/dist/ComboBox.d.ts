@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { Slot, DefaultSlot } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -26,6 +27,7 @@ import type InputComposition from "./features/InputComposition.js";
 interface IComboBoxItem extends UI5Element {
     text?: string;
     headerText?: string;
+    value?: string;
     focused: boolean;
     isGroupItem?: boolean;
     selected?: boolean;
@@ -53,6 +55,32 @@ type ComboBoxSelectionChangeEventDetail = {
  * -  Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.
  * -  Drop-down arrow - expands\collapses the option list.
  * -  Option list - the list of available options.
+ *
+ * ### Working with Values
+ *
+ * The ComboBox offers two ways to work with item selection:
+ *
+ * **1. Display Text Only (using `value`):**
+ * ```html
+ * <ui5-combobox value="Germany">
+ *   <ui5-cb-item text="Germany"></ui5-cb-item>
+ *   <ui5-cb-item text="France"></ui5-cb-item>
+ * </ui5-combobox>
+ * ```
+ * Use this approach when the displayed text is sufficient for your needs.
+ *
+ * **2. Unique Identifiers - Recommended (using `selectedValue` and item `value`):**
+ * ```html
+ * <ui5-combobox value="Germany" selected-value="DE">
+ *   <ui5-cb-item text="Germany" value="DE"></ui5-cb-item>
+ *   <ui5-cb-item text="France" value="FR"></ui5-cb-item>
+ * </ui5-combobox>
+ * ```
+ * This is the recommended approach when you need to work with unique identifiers (IDs, codes) separate from display text.
+ * The `selectedValue` property references the `value` property of the selected item.
+ * In forms, the item's `value` (e.g., "DE") will be submitted instead of the display text.
+ *
+ * **Important:** Do not mix the `selectedValue` approach with the deprecated `selected` property on items.
  *
  * ### Keyboard Handling
  *
@@ -93,6 +121,26 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
      * @public
      */
     value: string;
+    /**
+     * Defines the value of the selected item (references the `value` property of `ui5-cb-item`).
+     *
+     * Use this property to work with unique identifiers (IDs, codes) instead of display text.
+     * When set, the ComboBox finds and selects the item whose `value` property matches this property.
+     *
+     * **Benefits:**
+     * - Select items programmatically by their unique identifier
+     * - Handle items with identical display text but different underlying values
+     * - Submit machine-readable values in forms (the item's `value` is submitted instead of the display text)
+     *
+     * **When to use `selectedValue` vs `value`:**
+     * - **Recommended:** Use `selectedValue` + item `value` when you need unique identifiers separate from display text (e.g., country codes "DE", "FR" with display names "Germany", "France")
+     * - Use only the ComboBox `value` property when the display text itself is sufficient for your use case
+     *
+     * @default undefined
+     * @public
+     * @since 2.20.0
+     */
+    selectedValue?: string;
     /**
      * Determines the name by which the component will be identified upon submission in an HTML form.
      *
@@ -230,7 +278,7 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
      * Defines the component items.
      * @public
      */
-    items: Array<IComboBoxItem>;
+    items: DefaultSlot<IComboBoxItem>;
     /**
      * Defines the value state message that will be displayed as pop up under the component.
      * The value state message slot should contain only one root element.
@@ -242,13 +290,13 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
      * @since 1.0.0-rc.9
      * @public
      */
-    valueStateMessage: Array<HTMLElement>;
+    valueStateMessage: Slot<HTMLElement>;
     /**
      * Defines the icon to be displayed in the input field.
      * @public
      * @since 1.0.0-rc.9
      */
-    icon: Array<IIcon>;
+    icon: Slot<IIcon>;
     _initialRendering: boolean;
     _itemFocused: boolean;
     _autocomplete: boolean;
@@ -257,6 +305,7 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     _lastValue: string;
     _selectedItemText: string;
     _userTypedValue: string;
+    _useSelectedValue: boolean;
     _valueStateLinks: Array<HTMLElement>;
     _composition?: InputComposition;
     static i18nBundle: I18nBundle;

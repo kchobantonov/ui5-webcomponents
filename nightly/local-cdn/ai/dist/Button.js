@@ -11,7 +11,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot-strict.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { BUTTON_TOOLTIP_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -49,7 +49,8 @@ import ButtonCss from "./generated/themes/Button.css.js";
  * @extends UI5Element
  * @since 2.0.0
  * @public
- * @experimental The Button and ButtonState web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
+ * @experimental The **@ui5/webcomponents-ai** package (including Button and ButtonState) is under active development and considered experimental. Component APIs are subject to change.
+ * Furthermore, the package supports **Horizon** themes only.
  */
 let Button = Button_1 = class Button extends UI5Element {
     constructor() {

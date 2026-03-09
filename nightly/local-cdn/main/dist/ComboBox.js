@@ -9,14 +9,13 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone, isAndroid, isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -67,6 +66,32 @@ var ValueStateIconMapping;
  * -  Drop-down arrow - expands\collapses the option list.
  * -  Option list - the list of available options.
  *
+ * ### Working with Values
+ *
+ * The ComboBox offers two ways to work with item selection:
+ *
+ * **1. Display Text Only (using `value`):**
+ * ```html
+ * <ui5-combobox value="Germany">
+ *   <ui5-cb-item text="Germany"></ui5-cb-item>
+ *   <ui5-cb-item text="France"></ui5-cb-item>
+ * </ui5-combobox>
+ * ```
+ * Use this approach when the displayed text is sufficient for your needs.
+ *
+ * **2. Unique Identifiers - Recommended (using `selectedValue` and item `value`):**
+ * ```html
+ * <ui5-combobox value="Germany" selected-value="DE">
+ *   <ui5-cb-item text="Germany" value="DE"></ui5-cb-item>
+ *   <ui5-cb-item text="France" value="FR"></ui5-cb-item>
+ * </ui5-combobox>
+ * ```
+ * This is the recommended approach when you need to work with unique identifiers (IDs, codes) separate from display text.
+ * The `selectedValue` property references the `value` property of the selected item.
+ * In forms, the item's `value` (e.g., "DE") will be submitted instead of the display text.
+ *
+ * **Important:** Do not mix the `selectedValue` approach with the deprecated `selected` property on items.
+ *
  * ### Keyboard Handling
  *
  * The `ui5-combobox` provides advanced keyboard handling.
@@ -101,6 +126,13 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         return this.getFocusDomRefAsync();
     }
     get formFormattedValue() {
+        // Find the selected item
+        const selectedItem = this._getItems().find(item => item.selected && !item.isGroupItem);
+        // If selected item has a value property, return it (like Select does)
+        if (selectedItem && selectedItem.value !== undefined) {
+            return selectedItem.value;
+        }
+        // Fallback to display text (backward compatibility)
         return this.value;
     }
     constructor() {
@@ -223,6 +255,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         this._selectionPerformed = false;
         this._selectedItemText = "";
         this._userTypedValue = "";
+        this._useSelectedValue = false;
         this._valueStateLinks = [];
         // when an initial value is set it should be considered as a _lastValue
         this._lastValue = this.getAttribute("value") || "";
@@ -248,9 +281,12 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         else {
             this.valueStateOpen = false;
         }
+        if (this.selectedValue) {
+            this._useSelectedValue = true;
+        }
         this._selectMatchingItem();
         this._initialRendering = false;
-        this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
+        this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
     }
     get iconsCount() {
         const slottedIconsCount = this.icon?.length || 0;
@@ -485,9 +521,6 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         if (this.focused && isOpen && (isUp(e) || isPageUp(e) || isPageDown(e))) {
             return;
         }
-        if (allItems.length - 1 === indexOfItem && isDown(e)) {
-            return;
-        }
         this._isKeyNavigation = true;
         if (e.key === "ArrowDown"
             || e.key === "ArrowUp"
@@ -510,12 +543,14 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         if (this.open) {
             this._itemFocused = true;
             this.value = isGroupItem ? "" : currentItem.text;
+            this.selectedValue = isGroupItem ? undefined : currentItem.value;
             this.focused = false;
             currentItem.focused = true;
         }
         else {
             this.focused = true;
             this.value = isGroupItem ? nextItem.text : currentItem.text;
+            this.selectedValue = currentItem.value;
             currentItem.focused = false;
         }
         this._announceSelectedItem(indexOfItem);
@@ -539,7 +574,15 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         if (this.focused && indexOfItem === -1 && isOpen) {
             this.focused = false;
         }
-        this._handleItemNavigation(e, ++indexOfItem, true /* isForward */);
+        const allItems = this._getItems();
+        const currentItem = allItems[indexOfItem];
+        const isLastItem = indexOfItem === allItems.length - 1;
+        // We don't want to navigate further if the current item is the last one and either is already focused or the popover is closed
+        if (isLastItem && ((isOpen && currentItem.focused) || !isOpen)) {
+            return;
+        }
+        const itemIndexToBeFocused = isLastItem ? indexOfItem : indexOfItem + 1;
+        this._handleItemNavigation(e, itemIndexToBeFocused, true /* isForward */);
     }
     _handleArrowUp(e, indexOfItem) {
         const isOpen = this.open;
@@ -759,19 +802,32 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         }
         const matchingItems = this._startsWithMatchingItems(current);
         if (matchingItems.length) {
-            const exactMatch = matchingItems.find(item => item.text === current);
+            let exactMatch;
+            if (this._useSelectedValue) {
+                exactMatch = matchingItems.find(item => item.value === (currentlyFocusedItem?.value || this.selectedValue) && item.text?.toLowerCase() === current.toLowerCase());
+            }
+            else {
+                exactMatch = matchingItems.find(item => item.text?.toLowerCase() === current.toLowerCase());
+            }
             return exactMatch ?? matchingItems[0];
         }
     }
     _applyAtomicValueAndSelection(item, filterValue) {
         const value = (item && item.text) || "";
         this.inner.value = value;
-        this.inner.setSelectionRange(filterValue.length, value.length);
+        // select the whole value if it doesn't start with the filterValue, otherwise select only the autocompleted part
+        const startsWithFilter = value.toLowerCase().startsWith(filterValue.toLowerCase());
+        const selectionStart = startsWithFilter ? filterValue.length : 0;
+        this.inner.setSelectionRange(selectionStart, value.length);
         this.value = value;
+        if (this._useSelectedValue) {
+            this.selectedValue = item.value;
+        }
     }
     _selectMatchingItem() {
         const currentlyFocusedItem = this.items.find(item => item.focused);
         const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
+        const valueToMatch = currentlyFocusedItem?.value ?? this.selectedValue;
         let itemToBeSelected;
         let previouslySelectedItem;
         // Find previously selected item
@@ -790,9 +846,27 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         });
         this._filteredItems.forEach(item => {
             if (!shouldSelectionBeCleared && !itemToBeSelected) {
-                itemToBeSelected = ((!item.isGroupItem && (item.text === this.value)) ? item : item?.items?.find(i => i.text === this.value));
+                if (isInstanceOfComboBoxItemGroup(item)) {
+                    if (this._useSelectedValue) {
+                        itemToBeSelected = item.items.find(i => i.value === valueToMatch && (this.value === "" || i.text?.toLowerCase() === this.value.toLowerCase()));
+                    }
+                    else {
+                        itemToBeSelected = item.items?.find(i => i.text?.toLowerCase() === this.value.toLowerCase());
+                    }
+                }
+                else {
+                    if (this._useSelectedValue) {
+                        itemToBeSelected = this.items.find(i => i.value === valueToMatch && (this.value === "" || i.text?.toLowerCase() === this.value.toLowerCase()));
+                        return;
+                    }
+                    itemToBeSelected = item.text?.toLowerCase() === this.value.toLowerCase() ? item : undefined;
+                }
             }
         });
+        // When selectedValue matched an item but value is empty (initial render), populate value from the item's text
+        if (itemToBeSelected && this._initialRendering && this.value === "") {
+            this.value = itemToBeSelected.text || "";
+        }
         this._filteredItems = this._filteredItems.map(item => {
             if (!isInstanceOfComboBoxItemGroup(item)) {
                 item.selected = item === itemToBeSelected;
@@ -803,6 +877,12 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             });
             return item;
         });
+        if (!itemToBeSelected && this._useSelectedValue) {
+            this.selectedValue = undefined;
+        }
+        else {
+            this.selectedValue = itemToBeSelected?.value;
+        }
         const noUserInteraction = !this.focused && !this._isKeyNavigation && !this._selectionPerformed && !this._iconPressed;
         // Skip firing "selection-change" event if this is initial rendering or if there has been no user interaction yet
         if (this._initialRendering || noUserInteraction) {
@@ -847,6 +927,9 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             return this._closeRespPopover();
         }
         this.value = this._selectedItemText;
+        if (this._useSelectedValue) {
+            this.selectedValue = item.value;
+        }
         if (!item.selected) {
             this.fireDecoratorEvent("selection-change", {
                 item,
@@ -877,10 +960,13 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     }
     _clear() {
         const selectedItem = this.items.find(item => item.selected);
-        if (selectedItem?.text === this.value) {
+        if (selectedItem?.text?.toLowerCase() === this.value.toLowerCase()) {
             this.fireDecoratorEvent("change");
         }
         this.value = "";
+        if (this._useSelectedValue) {
+            this.selectedValue = undefined;
+        }
         this.fireDecoratorEvent("input");
         if (this._isPhone) {
             this._lastValue = "";
@@ -1122,6 +1208,9 @@ __decorate([
 ], ComboBox.prototype, "value", void 0);
 __decorate([
     property()
+], ComboBox.prototype, "selectedValue", void 0);
+__decorate([
+    property()
 ], ComboBox.prototype, "name", void 0);
 __decorate([
     property({ type: Boolean })
@@ -1166,7 +1255,7 @@ __decorate([
     property({ type: Boolean, noAttribute: true })
 ], ComboBox.prototype, "_iconPressed", void 0);
 __decorate([
-    property({ type: Array })
+    property({ type: Array, noAttribute: true })
 ], ComboBox.prototype, "_filteredItems", void 0);
 __decorate([
     property({ type: Number, noAttribute: true })
@@ -1184,7 +1273,7 @@ __decorate([
     property({ type: Boolean })
 ], ComboBox.prototype, "_handleLinkNavigation", void 0);
 __decorate([
-    property({ type: Array })
+    property({ type: Array, noAttribute: true })
 ], ComboBox.prototype, "_linksListenersArray", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })

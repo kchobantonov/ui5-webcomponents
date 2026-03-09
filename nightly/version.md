@@ -1,7 +1,14 @@
-commit b62c313d4ba1f2baa1feb048066eb90c5c4f7571
-Author: Aleksandar Terziev <aleksandar.terziev@sap.com>
-Date:   Tue Dec 30 13:09:57 2025 +0200
+commit 1500ada0086b5e049f3e719245e05fffbf3704ba
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Sat Mar 7 08:39:29 2026 +0200
 
-    fix(ui5-multi-combo-box): unskip test (#12829)
+    fix(release): correct changelog extraction regex (#13214)
     
-    fix(ui5-multi-combo-box): fix failing test
+    fix(release): correct changelog extraction regex in extractChangelog.mjs
+    
+    The multiline flag causes $ to match end of every line, making
+    the lazy capture group always return empty. This resulted in all
+    2.20.x GitHub releases having empty release notes.
+    
+    Change the lookahead from (?=^# \[|$) to (?=\n# \[|$(?!\n)) so
+    $ only matches the true end of string, not end of each line.

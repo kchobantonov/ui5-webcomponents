@@ -3,6 +3,7 @@ import type TableCell from "./TableCell.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import type Button from "./Button.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base";
+import type { Slot, DefaultSlot } from "@ui5/webcomponents-base/dist/UI5Element.js";
 /**
  * @class
  *
@@ -27,7 +28,7 @@ declare class TableRow extends TableRowBase<TableCell> {
      *
      * @public
      */
-    cells: Array<TableCell>;
+    cells: DefaultSlot<TableCell>;
     /**
      * Defines the actions of the component.
      *
@@ -36,7 +37,7 @@ declare class TableRow extends TableRowBase<TableCell> {
      * @since 2.7.0
      * @public
      */
-    actions: Array<TableRowActionBase>;
+    actions: Slot<TableRowActionBase>;
     /**
      * Unique identifier of the row.
      *
@@ -80,10 +81,10 @@ declare class TableRow extends TableRowBase<TableCell> {
     _actionsCell?: TableCell;
     onBeforeRendering(): void;
     focus(focusOptions?: FocusOptions | undefined): Promise<void>;
+    _onpointerdown(e: PointerEvent): Promise<void>;
     _onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement): void;
     _onclick(): void;
-    _onkeyup(): void;
-    _onfocusout(): void;
+    _setActive(deactivationEvent: string): void;
     _onOverflowButtonClick(e: UI5CustomEvent<Button, "click">): void;
     get _isInteractive(): boolean;
     get _isNavigable(): boolean;

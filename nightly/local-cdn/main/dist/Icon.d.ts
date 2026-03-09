@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { AriaRole } from "@ui5/webcomponents-base/dist/types.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type IconDesign from "./types/IconDesign.js";
 import IconMode from "./types/IconMode.js";
 /**
@@ -67,7 +69,6 @@ interface IIcon extends HTMLElement {
  * ### Keyboard Handling
  *
  * - [Space] / [Enter] or [Return] - Fires the `click` event if the `mode` property is set to `Interactive`.
- * - [Shift] - If [Space] / [Enter] or [Return] is pressed, pressing [Shift] releases the ui5-icon without triggering the click event.
  *
  * ### ES6 Module Import
  *
@@ -82,6 +83,7 @@ declare class Icon extends UI5Element implements IIcon {
     eventDetails: {
         click: void;
     };
+    static i18nBundle: I18nBundle;
     /**
      * Defines the component semantic design.
      * @default "Default"
@@ -161,6 +163,7 @@ declare class Icon extends UI5Element implements IIcon {
     viewBox?: string;
     customTemplate?: object;
     customTemplateAsString?: string;
+    _onclick(e: MouseEvent): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     /**
@@ -173,6 +176,16 @@ declare class Icon extends UI5Element implements IIcon {
     onEnterDOM(): void;
     onBeforeRendering(): Promise<void>;
     get hasIconTooltip(): string | false | undefined;
+    _getAriaTypeDescription(): string;
+    get accessibilityInfo(): {
+        role?: undefined;
+        type?: undefined;
+        description?: undefined;
+    } | {
+        role: AriaRole;
+        type: string;
+        description: string | undefined;
+    };
 }
 export default Icon;
 export type { IIcon, };

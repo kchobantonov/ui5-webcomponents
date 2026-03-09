@@ -7,12 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot-strict.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ToolbarSelectCss from "./generated/themes/ToolbarSelect.css.js";
 // Templates
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
-import ToolbarItem from "./ToolbarItem.js";
+import ToolbarItemBase from "./ToolbarItemBase.js";
 /**
  * @class
  *
@@ -26,11 +26,11 @@ import ToolbarItem from "./ToolbarItem.js";
  * `import "@ui5/webcomponents/dist/ToolbarSelectOption.js";` (comes with `ui5-toolbar-select`)
  * @constructor
  * @abstract
- * @extends ToolbarItem
+ * @extends ToolbarItemBase
  * @public
  * @since 1.17.0
  */
-let ToolbarSelect = class ToolbarSelect extends ToolbarItem {
+let ToolbarSelect = class ToolbarSelect extends ToolbarItemBase {
     constructor() {
         super(...arguments);
         /**

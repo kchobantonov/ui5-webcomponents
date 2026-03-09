@@ -1,5 +1,6 @@
 import { BaseTextArea } from "@ui5/webcomponents/dist/TextArea.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { Slot } from "@ui5/webcomponents-base/dist/UI5Element.js";
 type TextAreaVersionChangeEventDetail = {
     backwards: boolean;
 };
@@ -25,6 +26,7 @@ type TextAreaVersionChangeEventDetail = {
  * @constructor
  * @extends BaseTextArea
  * @experimental The **@ui5/webcomponents-ai** package is under development and considered experimental - components' APIs are subject to change.
+ * Furthermore, the package supports **Horizon** themes only.
  * @since 2.16.0
  * @public
  * @slot {HTMLElement} menu Defines a slot for `ui5-menu` integration. This slot allows you to pass a `ui5-menu` instance that will be associated with the assistant.
@@ -70,7 +72,7 @@ declare class TextArea extends BaseTextArea {
      */
     totalVersions: number;
     focused: boolean;
-    menu: Array<HTMLElement>;
+    menu: Slot<HTMLElement>;
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
     /**

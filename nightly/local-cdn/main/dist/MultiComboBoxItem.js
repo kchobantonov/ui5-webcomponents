@@ -13,6 +13,7 @@ import CheckBox from "./CheckBox.js";
 import { ARIA_LABEL_LIST_ITEM_CHECKBOX, } from "./generated/i18n/i18n-defaults.js";
 import styles from "./generated/themes/MultiComboBoxItem.css.js";
 import MultiComboBoxItemTemplate from "./MultiComboBoxItemTemplate.js";
+import createInstanceChecker from "@ui5/webcomponents-base/dist/util/createInstanceChecker.js";
 /**
  * @class
  * The `ui5-mcb-item` represents the item for a `ui5-multi-combobox`.
@@ -53,6 +54,9 @@ __decorate([
     property({ type: Boolean })
 ], MultiComboBoxItem.prototype, "selected", void 0);
 __decorate([
+    property()
+], MultiComboBoxItem.prototype, "value", void 0);
+__decorate([
     property({ type: Boolean, noAttribute: true })
 ], MultiComboBoxItem.prototype, "_isVisible", void 0);
 __decorate([
@@ -72,10 +76,7 @@ MultiComboBoxItem = MultiComboBoxItem_1 = __decorate([
         bubbles: true,
     })
 ], MultiComboBoxItem);
-const isInstanceOfMultiComboBoxItem = (object) => {
-    return "isMultiComboBoxItem" in object;
-};
 MultiComboBoxItem.define();
 export default MultiComboBoxItem;
-export { isInstanceOfMultiComboBoxItem };
+export const isInstanceOfMultiComboBoxItem = createInstanceChecker("isMultiComboBoxItem");
 //# sourceMappingURL=MultiComboBoxItem.js.map

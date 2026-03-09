@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { Slot, DefaultSlot } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -187,6 +188,15 @@ declare class List extends UI5Element {
      */
     loadingDelay: number;
     /**
+     * Indicates whether the List header is sticky or not.
+     * If stickyHeader is set to true, then whenever you scroll the content or
+     * the application, the header of the list will be always visible.
+     * @default false
+     * @public
+     * @since 2.19.0
+     */
+    stickyHeader: boolean;
+    /**
      * Defines the accessible name of the component.
      * @default undefined
      * @public
@@ -274,7 +284,7 @@ declare class List extends UI5Element {
      * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
      * @public
      */
-    items: Array<ListItemBase | ListItemGroup>;
+    items: DefaultSlot<ListItemBase | ListItemGroup>;
     /**
      * Defines the component header.
      *
@@ -282,7 +292,7 @@ declare class List extends UI5Element {
      * `headerText` property is ignored.
      * @public
      */
-    header: Array<HTMLElement>;
+    header: Slot<HTMLElement>;
     static i18nBundle: I18nBundle;
     _previouslyFocusedItem: ListItemBase | null;
     _forwardingFocus: boolean;
@@ -333,6 +343,7 @@ declare class List extends UI5Element {
     get ariaLabelledBy(): string | undefined;
     get ariaLabelTxt(): string | undefined;
     get ariaDescriptionText(): string;
+    get defaultAriaDescriptionText(): string;
     get growingButtonAriaLabel(): string | undefined;
     get growingButtonAriaLabelledBy(): string | undefined;
     get growingButtonAriaDescribedBy(): string | undefined;

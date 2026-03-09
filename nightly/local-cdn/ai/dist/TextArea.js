@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var TextArea_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot-strict.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { BaseTextArea } from "@ui5/webcomponents/dist/TextArea.js";
@@ -41,6 +41,7 @@ import TextAreaTemplate from "./TextAreaTemplate.js";
  * @constructor
  * @extends BaseTextArea
  * @experimental The **@ui5/webcomponents-ai** package is under development and considered experimental - components' APIs are subject to change.
+ * Furthermore, the package supports **Horizon** themes only.
  * @since 2.16.0
  * @public
  * @slot {HTMLElement} menu Defines a slot for `ui5-menu` integration. This slot allows you to pass a `ui5-menu` instance that will be associated with the assistant.

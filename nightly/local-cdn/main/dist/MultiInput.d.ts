@@ -6,6 +6,7 @@ import type Token from "./Token.js";
 import type Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import type { InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail } from "./Input.js";
+import type { Slot } from "@ui5/webcomponents-base/dist/UI5Element.js";
 interface IToken extends UI5Element, ITabbable {
     text?: string;
     readonly: boolean;
@@ -79,7 +80,7 @@ declare class MultiInput extends Input implements IFormInputElement {
      * Defines the component tokens.
      * @public
      */
-    tokens: Array<IToken>;
+    tokens: Slot<IToken>;
     _skipOpenSuggestions: boolean;
     _valueHelpIconPressed: boolean;
     get formValidityMessage(): string;
@@ -105,7 +106,7 @@ declare class MultiInput extends Input implements IFormInputElement {
     _onfocusin(e: FocusEvent): void;
     onBeforeRendering(): void;
     /**
-     * Override the _handlePickerAfterOpen method to reset toggle state when dialog opens with tokens
+     * Override the _handlePickerAfterOpen method to handle token display based on device type
      */
     _handlePickerAfterOpen(): void;
     onAfterRendering(): void;
@@ -141,7 +142,7 @@ declare class MultiInput extends Input implements IFormInputElement {
     get shouldDisplayOnlyValueStateMessage(): boolean;
     /**
      * Computes the effective state for showing tokens in suggestions.
-     * Defaults to true when tokens exist, but respects explicit user toggle.
+     * Returns false (show suggestions) by default, true only when explicitly set.
      */
     get _effectiveShowTokensInSuggestions(): boolean;
 }
