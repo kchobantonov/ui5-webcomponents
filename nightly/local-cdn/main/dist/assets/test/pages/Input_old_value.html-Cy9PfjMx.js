@@ -1,1 +1,0 @@
-import"../../bundle.esm-7do_DDxi.js";let e="";inp1.addEventListener("input",t=>{t.target.value.length<=3&&(e=t.target.value),inp1.value=e,inp2.value=e});inp2.addEventListener("input",t=>{t.target.value.length<=3&&(e=t.target.value),inp1.value=e,inp2.value=e});
