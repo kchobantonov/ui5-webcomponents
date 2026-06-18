@@ -1003,78 +1003,33 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/animations/AnimationQueue.js",
+      "path": "dist/asset-registries/Icons.js",
       "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "AnimationQueue",
-            "module": "dist/animations/AnimationQueue.js"
-          }
-        }
-      ]
+      "exports": []
     },
     {
       "kind": "javascript-module",
-      "path": "dist/animations/animate.js",
+      "path": "dist/asset-registries/Illustrations.js",
       "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "animate",
-            "module": "dist/animations/animate.js"
-          }
-        }
-      ]
+      "exports": []
     },
     {
       "kind": "javascript-module",
-      "path": "dist/animations/scroll.js",
+      "path": "dist/asset-registries/LocaleData.js",
       "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "scroll",
-            "module": "dist/animations/scroll.js"
-          }
-        }
-      ]
+      "exports": []
     },
     {
       "kind": "javascript-module",
-      "path": "dist/animations/slideDown.js",
+      "path": "dist/asset-registries/Themes.js",
       "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "slideDown",
-            "module": "dist/animations/slideDown.js"
-          }
-        }
-      ]
+      "exports": []
     },
     {
       "kind": "javascript-module",
-      "path": "dist/animations/slideUp.js",
+      "path": "dist/asset-registries/i18n.js",
       "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "slideUp",
-            "module": "dist/animations/slideUp.js"
-          }
-        }
-      ]
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1150,33 +1105,78 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/asset-registries/Icons.js",
+      "path": "dist/animations/AnimationQueue.js",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "AnimationQueue",
+            "module": "dist/animations/AnimationQueue.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/asset-registries/Illustrations.js",
+      "path": "dist/animations/animate.js",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "animate",
+            "module": "dist/animations/animate.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/asset-registries/LocaleData.js",
+      "path": "dist/animations/scroll.js",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "scroll",
+            "module": "dist/animations/scroll.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/asset-registries/Themes.js",
+      "path": "dist/animations/slideDown.js",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "slideDown",
+            "module": "dist/animations/slideDown.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/asset-registries/i18n.js",
+      "path": "dist/animations/slideUp.js",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "slideUp",
+            "module": "dist/animations/slideUp.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
