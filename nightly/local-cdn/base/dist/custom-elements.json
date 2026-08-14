@@ -1195,153 +1195,120 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/bound.js",
+      "path": "dist/features/F6Navigation.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "bound",
-            "module": "dist/decorators/bound.js"
+            "name": "F6Navigation",
+            "module": "dist/features/F6Navigation.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/customElement.js",
+      "path": "dist/features/InputElementsFormSupport.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/features/LegacyDateFormats.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "customElement",
-            "module": "dist/decorators/customElement.js"
+            "name": "LegacyDateFormats",
+            "module": "dist/features/LegacyDateFormats.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/event-strict.js",
+      "path": "dist/features/OpenUI5Element.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "event",
-            "module": "dist/decorators/event-strict.js"
+            "name": "OpenUI5Element",
+            "module": "dist/features/OpenUI5Element.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/event.js",
+      "path": "dist/features/OpenUI5Enablement.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "event",
-            "module": "dist/decorators/event.js"
+            "name": "OpenUI5Enablement",
+            "module": "dist/features/OpenUI5Enablement.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/i18n.js",
+      "path": "dist/features/OpenUI5Support.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "i18n",
-            "module": "dist/decorators/i18n.js"
+            "name": "OpenUI5Support",
+            "module": "dist/features/OpenUI5Support.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/property.js",
+      "path": "dist/features/insertOpenUI5PopupStyles.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "property",
-            "module": "dist/decorators/property.js"
+            "name": "insertOpenUI5PopupStyles",
+            "module": "dist/features/insertOpenUI5PopupStyles.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/query.js",
+      "path": "dist/features/patchPatcher.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "query",
-            "module": "dist/decorators/query.js"
+            "name": "patchPatcher",
+            "module": "dist/features/patchPatcher.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/decorators/queryAll.js",
+      "path": "dist/features/patchPopup.js",
       "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "queryAll",
-            "module": "dist/decorators/queryAll.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/decorators/slot-strict.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "slot",
-            "module": "dist/decorators/slot-strict.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/decorators/slot.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "slot",
-            "module": "dist/decorators/slot.js"
-          }
-        }
-      ]
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1520,120 +1487,153 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/F6Navigation.js",
+      "path": "dist/decorators/bound.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "F6Navigation",
-            "module": "dist/features/F6Navigation.js"
+            "name": "bound",
+            "module": "dist/decorators/bound.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/InputElementsFormSupport.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/features/LegacyDateFormats.js",
+      "path": "dist/decorators/customElement.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "LegacyDateFormats",
-            "module": "dist/features/LegacyDateFormats.js"
+            "name": "customElement",
+            "module": "dist/decorators/customElement.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/OpenUI5Element.js",
+      "path": "dist/decorators/event-strict.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "OpenUI5Element",
-            "module": "dist/features/OpenUI5Element.js"
+            "name": "event",
+            "module": "dist/decorators/event-strict.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/OpenUI5Enablement.js",
+      "path": "dist/decorators/event.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "OpenUI5Enablement",
-            "module": "dist/features/OpenUI5Enablement.js"
+            "name": "event",
+            "module": "dist/decorators/event.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/OpenUI5Support.js",
+      "path": "dist/decorators/i18n.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "OpenUI5Support",
-            "module": "dist/features/OpenUI5Support.js"
+            "name": "i18n",
+            "module": "dist/decorators/i18n.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/insertOpenUI5PopupStyles.js",
+      "path": "dist/decorators/property.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "insertOpenUI5PopupStyles",
-            "module": "dist/features/insertOpenUI5PopupStyles.js"
+            "name": "property",
+            "module": "dist/decorators/property.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/patchPatcher.js",
+      "path": "dist/decorators/query.js",
       "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "patchPatcher",
-            "module": "dist/features/patchPatcher.js"
+            "name": "query",
+            "module": "dist/decorators/query.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "dist/features/patchPopup.js",
+      "path": "dist/decorators/queryAll.js",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "queryAll",
+            "module": "dist/decorators/queryAll.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/decorators/slot-strict.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "slot",
+            "module": "dist/decorators/slot-strict.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/decorators/slot.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "slot",
+            "module": "dist/decorators/slot.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
